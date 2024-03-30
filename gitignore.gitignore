@@ -36,4 +36,4 @@ Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
 # Cocoapods
-Pods/
+Pods/*
