@@ -13,7 +13,8 @@ class TabBarAssembly {
     func configureTabBar() -> UITabBarController {
         let tabBar = TabBarController()
 
-        let mainTapeVC = MainTapeViewController()
+        let mainTapeVM = MainTapeViewModel()
+        let mainTapeVC = MainTapeViewController(viewModel: mainTapeVM)
         mainTapeVC.title = "Лента"
 
         let mapWithAdsVM = MapWithAdsViewModel()

@@ -15,6 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        let authVM = AuthViewModel()
+        let authVC = AuthVC(viewModel: authVM)
+        authVM.view = authVC
+
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = TabBarAssembly().configureTabBar()
         window?.makeKeyAndVisible()

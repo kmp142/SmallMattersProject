@@ -18,41 +18,52 @@ protocol MapWithAdsVCInterface {
 
 class MapWithAdsVC: UIViewController {
 
+    //MARK: - Properties
+
     private lazy var mapView: YMKMapView = {
         let mapView = YBaseMapView().mapView
         mapView?.mapWindow.map.isRotateGesturesEnabled = false
         return mapView!
     }()
 
-    private lazy var adInfoView = UIView()
+    private lazy var adInfoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
 
     private lazy var adNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
     private lazy var adAddressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
     private lazy var distanceToAdLabel: UILabel = {
         let label = UILabel()
         label.text = "от вас"
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
-    private lazy var deadlineLabel: UILabel = {
+    private lazy var adDeadlineLabel: UILabel = {
         let label = UILabel()
         label.text = "Срок выполнения: "
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
 
     private var viewModel: MapWithAdsViewModelInterface?
 
     private var subscriptions = Set<AnyCancellable>()
+
+    //MARK: - Initialization
 
     init(viewModel: MapWithAdsViewModelInterface?) {
         super.init(nibName: nil, bundle: nil)
@@ -65,23 +76,71 @@ class MapWithAdsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(mapView)
+        view.backgroundColor = .white
         createSubscriptionOnViewModel()
-        setupConstraints()
+        configureView()
     }
 
-    private func createSubscriptionOnViewModel() {
-        if let viewModel = viewModel as? MapWithAdsViewModel {
-            viewModel.$ads
-                .compactMap{ $0 }
-                .sink { [weak self] ads in
-                    self?.removeAllPlacemarks()
-                    for ad in ads {
-                        self?.addPlacemarkOnMap(latitude: ad.location.latitude, longitude: ad.location.longitude, tapListener: self, userData: ad)
-                    }
-                }.store(in: &subscriptions)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureAdInfoView()
+    }
+
+    //MARK: - View configuration
+
+    private func configureView() {
+        view.addSubview(mapView)
+        mapView.addSubview(adInfoView)
+        setupMapViewConstraints()
+//        configureAdInfoView()
+    }
+
+    private func setupMapViewConstraints() {
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top)
+            make.left.right.bottom.equalToSuperview()
         }
     }
+
+    private func configureAdInfoView() {
+        adInfoView.addSubview(adNameLabel)
+        adInfoView.addSubview(adAddressLabel)
+        adInfoView.addSubview(adDeadlineLabel)
+        adInfoView.addSubview(distanceToAdLabel)
+
+        adNameLabel.text = "Название объявления"
+        adAddressLabel.text = "Казань, Технократия"
+
+        if let tabBar = self.tabBarController?.tabBar {
+            adInfoView.snp.makeConstraints { make in
+                make.left.right.equalToSuperview().inset(8)
+                make.height.equalTo(70)
+                make.bottom.equalTo(tabBar.snp.top).offset(-10)
+            }
+        }
+
+        adNameLabel.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().inset(4)
+        }
+
+        adAddressLabel.snp.makeConstraints { make in
+            make.top.equalTo(adNameLabel.snp.bottom).inset(4)
+            make.left.equalTo(adNameLabel.snp.left)
+        }
+
+        adDeadlineLabel.snp.makeConstraints { make in
+            make.top.equalTo(adAddressLabel.snp.bottom).inset(4)
+            make.left.equalTo(adAddressLabel.snp.left)
+        }
+
+        distanceToAdLabel.snp.makeConstraints { make in
+            make.top.equalTo(adDeadlineLabel.snp.bottom).inset(4)
+            make.left.equalTo(adDeadlineLabel.snp.left)
+        }
+
+    }
+
+    //MARK: - YMaps
 
     func addPlacemarkOnMap(latitude: Double, longitude: Double, tapListener: YMKMapObjectTapListener?, userData: Ad?) {
         DispatchQueue.main.async { [weak self] in
@@ -125,24 +184,22 @@ class MapWithAdsVC: UIViewController {
         self.mapView.mapWindow.map.mapObjects.clear()
     }
 
-    private func setupConstraints() {
-        mapView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.right.bottom.equalToSuperview()
+    //MARK: - Binding
+
+    private func createSubscriptionOnViewModel() {
+        if let viewModel = viewModel as? MapWithAdsViewModel {
+            viewModel.$ads
+                .compactMap{ $0 }
+                .sink { [weak self] ads in
+                    self?.removeAllPlacemarks()
+                    for ad in ads {
+                        self?.addPlacemarkOnMap(latitude: ad.location.latitude, longitude: ad.location.longitude, tapListener: self, userData: ad)
+                    }
+                }.store(in: &subscriptions)
         }
     }
 
-    private func configureAdInfoView() {
-
-    }
-
-    private func configureNavigationVar() {
-        title = "Карта объявлений"
-        let backButton = UIBarButtonItem(barButtonSystemItem: .close,
-                                         target: self,
-                                         action: #selector(backButtonTapped))
-        navigationItem.leftBarButtonItem = backButton
-    }
+    //MARK: - Objc targets
 
     @objc private func backButtonTapped() {
         dismiss(animated: true)
@@ -155,7 +212,6 @@ extension MapWithAdsVC: YMKMapObjectTapListener {
             return false
         }
         moveMapCamera(toPoint: placemark.geometry, zoom: 17, animationDuration: 0.5)
-        print((placemark.userData as! Ad).name)
         return true
     }
 }

@@ -16,11 +16,14 @@ class DeadlineIndicator {
         var image = UIImage(named: "whiteTemplate")
         switch distinctionBetweenDateAndNowInHours {
         case 0...3:
-            image = image?.withTintColor(.red)
+            let red = #colorLiteral(red: 1, green: 0.3226445913, blue: 0.3124185205, alpha: 1)
+            image = image?.withTintColor(red)
         case 3...24:
-            image = image?.withTintColor(.blue)
+            let blue = #colorLiteral(red: 0.4115773439, green: 0.793646872, blue: 1, alpha: 1)
+            image = image?.withTintColor(blue)
         case 24...48:
-            image = image?.withTintColor(.green)
+            let green = #colorLiteral(red: 0.4513883591, green: 1, blue: 0.672924757, alpha: 1)
+            image = image?.withTintColor(green)
         default: break
         }
         return image ?? UIImage()

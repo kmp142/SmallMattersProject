@@ -9,20 +9,28 @@ import Combine
 import UIKit
 import YandexMapsMobile
 
-protocol MapViewModelInterface {
+protocol SelectLocationMapViewModelInterface {
     func updateUserRealLocation()
     func updateCurrentSelectedLocation(with: YMKPoint)
     func setAddressCoordinatesByName(addressName: String)
     func setAddressNameByCoordinates(with: YMKPoint)
 }
 
-class MapViewModel: MapViewModelInterface {
+class MapViewModel: SelectLocationMapViewModelInterface {
+
+    //MARK: - Properties
 
     // Stores user location by phone geoposition
     @Published var userRealLocation: Coordinates?
     @Published var currentSelectedLocation: Coordinates?
     @Published var currentSelectedLocationAddress: String?
-    lazy var searchManager = YandexMapsAddressSearchInteractor()
+    private lazy var searchManager = YandexMapsAddressSearchInteractor()
+
+    init() {
+        updateUserRealLocation()
+    }
+
+    //MARK: Location
 
     func updateUserRealLocation() {
         LocationService.shared.$userCurrentLocation
@@ -31,10 +39,6 @@ class MapViewModel: MapViewModelInterface {
             self?.userRealLocation = coordinates
             self?.setAddressNameByCoordinates(with: YMKPoint(latitude: coordinates.latitude, longitude: coordinates.longitude))
         }.cancel()
-    }
-
-    init() {
-        updateUserRealLocation()
     }
 
     func updateCurrentSelectedLocation(with: YMKPoint) {
@@ -59,19 +63,16 @@ class MapViewModel: MapViewModelInterface {
     }
 
     func setAddressCoordinatesByName(addressName: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.searchManager.searchAddressByString(addressName, completion: { response in
-                if !response.collection.children.isEmpty {
-                    let searchResults = response.collection.children
-                    if let mapObject = searchResults.first?.obj {
-                        self.currentSelectedLocationAddress = mapObject.name
-                        if let point = mapObject.geometry.first?.point {
-                            self.currentSelectedLocation = Coordinates(latitude: point.latitude, longitude: point.longitude)
-                        }
+        self.searchManager.searchAddressByString(addressName, completion: { response in
+            if !response.collection.children.isEmpty {
+                let searchResults = response.collection.children
+                if let mapObject = searchResults.first?.obj {
+                    self.currentSelectedLocationAddress = mapObject.name
+                    if let point = mapObject.geometry.first?.point {
+                        self.currentSelectedLocation = Coordinates(latitude: point.latitude, longitude: point.longitude)
                     }
                 }
-            })
-        }
+            }
+        })
     }
 }

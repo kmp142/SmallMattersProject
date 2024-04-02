@@ -14,7 +14,8 @@ import YandexMapsMobile
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        FirebaseApp.configure()
+        
+        FirebaseApp.configure()
 
         YMKMapKit.setApiKey("aa792667-2edc-4824-8e4d-591c8793c3b6")
         YMKMapKit.setLocale("ru_RU")
