@@ -44,8 +44,6 @@ class MainTapeView: UIView, UICollectionViewDelegate {
 
     private var dataSource: UICollectionViewDiffableDataSource<CVSection, Ad>?
 
-    private weak var controller: MainTapeViewControllerInterface?
-
     private let leftIndent: CGFloat = DeviceScreenParams.screenWidth * 0.02
 
     private weak var delegate: MainTapeViewDelegate?
