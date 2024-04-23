@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Для определения вашего текущего местоположения и предоставления соответствующих услуг</string>
+	<string>Разрешите доступ к геопозиции для точного выбора своей геолокации и просмотра объявлений на карте</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

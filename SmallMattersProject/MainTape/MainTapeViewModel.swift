@@ -6,14 +6,23 @@
 //
 
 import Foundation
+import YandexMapsMobile
 
-protocol MainTapeViewModelInterface {}
+protocol MainTapeViewModelInterface {
+    func updateAllAds()
+}
 
 class MainTapeViewModel: MainTapeViewModelInterface {
 
     @Published var ads: [Ad] = []
+    private let routeBuilder = YRouteBuilder()
+    private var userLocation: Location = Location(latitude: 55.791941, longitude: 49.126231)
 
     init() {
-        self.ads = AdsService.shared.getAdsFromServer()
+        updateAllAds()
+    }
+
+    func updateAllAds() {
+        ads = AdsService.shared.getAdsFromServer()
     }
 }

@@ -6,28 +6,31 @@
 //
 
 import Foundation
+import UIKit
 
 struct Ad: Hashable {
-    let id = UUID()
+    let id: UUID
     let author: User
     var executor: User?
-    var cost: Double
+    var distanceToUser: Double?
+    var bounty: Double
     var name: String
     var description: String
-    var location: Coordinates
+    var location: Location
     var deadline: Date
     var minimalUserRating: Int
 }
 
 extension Ad {
     init() {
+        id = UUID()
         author = User()
-        executor = User(name: "someName \(Int.random(in: 0...190))", registrationDate: Date.now - 10)
-        cost = 100
-        name = "Название объявления"
+        executor = User(id: UUID(), image: UIImage(named: "bluePin")!, name: "someName \(Int.random(in: 0...190))", registrationDate: Date.now - 10, rating: Double.random(in: 1...5))
+        bounty = Double.random(in: 100...999)
+        name = "Чистка парковки от снега"
         description = "Нужно почистить снег"
-        location = Coordinates(latitude: Double.random(in: 50.0 ... 55.0),
-                               longitude: Double.random(in: 40.0 ... 50.0))
+        location = Location(latitude: Double.random(in: 55.7640...55.8199),
+                               longitude: Double.random(in: 49.1023...49.1502))
         deadline = Date.now + Double.random(in: 1...172800)
         minimalUserRating = 5
     }

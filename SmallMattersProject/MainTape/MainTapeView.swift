@@ -15,7 +15,11 @@ enum CVSection {
 
 protocol MainTapeViewDelegate: AnyObject {
     func didTapAddressButton()
+    func updateCVDataSource()
+    func filtersButtonTapped()
 }
+
+    //TODO: - Replace button on view with tapGestureRecognizer
 
 class MainTapeView: UIView, UICollectionViewDelegate {
 
@@ -40,11 +44,15 @@ class MainTapeView: UIView, UICollectionViewDelegate {
         return button
     }()
 
+    private lazy var refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshRequested), for: .valueChanged)
+        return rc
+    }()
+
     private lazy var adsCV: UICollectionView = configureAdsCV()
 
     private var dataSource: UICollectionViewDiffableDataSource<CVSection, Ad>?
-
-    private let leftIndent: CGFloat = DeviceScreenParams.screenWidth * 0.02
 
     private weak var delegate: MainTapeViewDelegate?
 
@@ -52,6 +60,7 @@ class MainTapeView: UIView, UICollectionViewDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        backgroundColor = .white
         configureDataSource()
         configureView()
     }
@@ -82,7 +91,9 @@ class MainTapeView: UIView, UICollectionViewDelegate {
         button.setTitleColor(color, for: .normal)
         button.setTitleColor(color, for: .highlighted)
         button.contentHorizontalAlignment = .left
+        button.configuration?.titleAlignment = .leading
         button.addTarget(self, action: #selector(didTapAddressButton), for: .touchUpInside)
+
         return button
     }
 
@@ -90,8 +101,7 @@ class MainTapeView: UIView, UICollectionViewDelegate {
         let cv = UICollectionView(frame: .zero, 
                                   collectionViewLayout: configureCVFlowLayout())
         cv.register(AdCVCell.self, forCellWithReuseIdentifier: AdCVCell.reuseIdentifier)
-        cv.delegate = self
-        cv.dataSource = self
+        cv.refreshControl = refreshControl
         return cv
     }
 
@@ -101,20 +111,51 @@ class MainTapeView: UIView, UICollectionViewDelegate {
         flow.minimumLineSpacing = 1
         flow.minimumInteritemSpacing = 1
         flow.sectionInset = .zero
-        flow.itemSize = CGSize(width: DeviceScreenParams.screenWidth, height: 120)
+        flow.itemSize = CGSize(width: DeviceScreenParams.screenWidth, height: 88)
         return flow
     }
 
+    private func addSubviews(_ subviews: UIView...) {
+        subviews.forEach { addSubview($0) }
+    }
+
+    private func setupConstraints() {
+        addressButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().inset(16)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(16)
+        }
+
+        searchBar.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(8)
+            make.top.equalTo(addressButton.snp.bottom).offset(4)
+            make.height.equalTo(40)
+        }
+
+        filtersButton.snp.makeConstraints { make in
+            make.height.width.equalTo(searchBar.snp.height)
+            make.centerY.equalToSuperview()
+            make.right.equalTo(searchBar.snp.right).inset(12)
+        }
+
+        adsCV.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(searchBar.snp.bottom).offset(4)
+        }
+    }
+
+    func setupDelegate(delegate: MainTapeViewDelegate) {
+        self.delegate = delegate
+    }
+
+    //MARK: - DataSource
+
     private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<CVSection, Ad>(collectionView: adsCV, cellProvider: {collectionView,indexPath,itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<CVSection, Ad>(collectionView: adsCV, cellProvider: {collectionView, indexPath, ad in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdCVCell.reuseIdentifier, for: indexPath) as! AdCVCell
-            cell.configureCell(with: (self.dataSource?.itemIdentifier(for: indexPath))!)
+            cell.configureCell(with: ad)
             return cell
         })
-        var snapshot = NSDiffableDataSourceSnapshot<CVSection, Ad>()
-        snapshot.appendSections([CVSection.main])
-        snapshot.appendItems([Ad()], toSection: .main)
-        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 
     func updateDataSource(newItems: [Ad]) {
@@ -124,60 +165,19 @@ class MainTapeView: UIView, UICollectionViewDelegate {
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
 
-    private func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { addSubview($0) }
-    }
-
-    func setupDelegate(delegate: MainTapeViewDelegate) {
-        self.delegate = delegate
-    }
-
-    private func setupConstraints() {
-
-        addressButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(leftIndent)
-            make.right.equalToSuperview().inset(leftIndent)
-            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(20)
-            make.height.equalTo(30)
-        }
-
-        searchBar.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(leftIndent)
-            make.top.equalTo(addressButton.snp.bottom).offset(10)
-            make.height.equalTo(50)
-        }
-
-        filtersButton.snp.makeConstraints { make in
-            make.height.width.equalTo(searchBar.snp.height)
-            make.centerY.equalToSuperview()
-            make.right.equalTo(searchBar.snp.right).inset(10)
-
-        }
-
-        adsCV.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(searchBar.snp.bottom).offset(15)
-        }
-    }
-
     //MARK: - Objc targets
 
     @objc private func openFiltersScreen() {
-        print("openFiltersScreen button tapped")
+        delegate?.filtersButtonTapped()
     }
 
     @objc private func didTapAddressButton() {
         delegate?.didTapAddressButton()
     }
-}
 
-extension MainTapeView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+    @objc private func refreshRequested() {
+        delegate?.updateCVDataSource()
+        refreshControl.endRefreshing()
     }
 }
 

@@ -23,38 +23,25 @@ class YRouteBuilder {
 
     let vehicleOptions = {
         let options = YMKDrivingVehicleOptions()
-        options.vehicleType = YMKDrivingVehicleType.moto
-        options.weight = 200
-        options.weight = 100
+        options.vehicleType = YMKDrivingVehicleType.init(rawValue: 0)!
         return options
     }()
 
     var searchSession: YMKDrivingSummarySession?
 
-    func calculateDistance(completion: @escaping ([YMKDrivingSummary]) -> Void) {
-        let points = [
-            YMKRequestPoint(point: YMKPoint(latitude: 25.196141, longitude: 55.278543), type: .waypoint, pointContext: nil, drivingArrivalPointId: nil),
-            YMKRequestPoint(point: YMKPoint(latitude: 25.171148, longitude: 55.238034), type: .waypoint, pointContext: nil, drivingArrivalPointId: nil)
-        ]
+    func calculateDistance(from: YMKRequestPoint, to: YMKRequestPoint, completion: @escaping ([YMKDrivingSummary]?, Error?) -> Void){
 
         drivingRouter = YMKDirections.sharedInstance().createDrivingRouter(withType: .combined)
 
+        let drivingRouteHandler = { (drivingRoutes: [YMKDrivingSummary]?, error: Error?) -> Void in
+            completion(drivingRoutes, error)
+        }
+
         searchSession = drivingRouter
             .requestRoutesSummary(
-                with: points,
+                with: [from, to],
                 drivingOptions: drivingOptions,
                 vehicleOptions: vehicleOptions,
                 summaryHandler: drivingRouteHandler)
-    }
-
-    func drivingRouteHandler(drivingRoutes: [YMKDrivingSummary]?, error: Error?) {
-        if error != nil {
-            return
-        }
-
-        if drivingRoutes != nil {
-            print(drivingRoutes?[0].weight.distance.value as Any)
-            return
-        }
     }
 }

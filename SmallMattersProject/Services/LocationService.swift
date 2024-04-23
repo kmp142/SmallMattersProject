@@ -14,7 +14,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     static let shared = LocationService()
     private var locationManager = CLLocationManager()
 
-    @Published var userCurrentLocation: Coordinates?
+    @Published var userCurrentLocation: Location?
 
     private override init() {
         super.init()
@@ -24,8 +24,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let coordinates = locations.first?.coordinate {
-            userCurrentLocation = Coordinates(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        if let location = locations.first?.coordinate {
+            userCurrentLocation = Location(latitude: location.latitude, longitude: location.longitude)
         }
     }
 

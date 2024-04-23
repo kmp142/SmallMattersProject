@@ -152,6 +152,8 @@ class AuthVC: UIViewController, AuthVCInterface {
         print("login failed")
     }
 
+    //MARK: - Objc targets
+
     @objc private func loginButtonTapped() {
         viewModel?.login(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
     }

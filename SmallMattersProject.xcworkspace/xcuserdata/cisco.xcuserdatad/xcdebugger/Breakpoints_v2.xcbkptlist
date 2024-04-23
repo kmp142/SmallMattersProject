@@ -52,5 +52,728 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E16DBB55-9410-4715-8A08-970F67049A10"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "configureView()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E16DBB55-9410-4715-8A08-970F67049A10 - b8af02d6b5cc1816"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.setupMapViewConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "E16DBB55-9410-4715-8A08-970F67049A10 - fa2661d5f059c939"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SnapKit.ConstraintMaker) -&gt; () in SmallMattersProject.MapWithAdsVC.setupMapViewConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "E16DBB55-9410-4715-8A08-970F67049A10 - 6be6d77ac6048e4d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.configureView() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "304">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "048AC41D-7FDE-48FD-A7EE-554B0A785035"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "configureAdInfoView(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "048AC41D-7FDE-48FD-A7EE-554B0A785035 - 3f51b9fc20196fa1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.configureAdInfoView(with: SmallMattersProject.Ad) -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  uuid = "048AC41D-7FDE-48FD-A7EE-554B0A785035 - 3f51b9fc20196fa1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.configureAdInfoView(with: SmallMattersProject.Ad) -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "604">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D0B5A65A-544B-4631-9437-EF4FE1A08C1B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "calculateDistanceFromUserToAd(ad:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D0B5A65A-544B-4631-9437-EF4FE1A08C1B - 96dd46b5bc0e59e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.YMKDrivingSummary&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SmallMattersProject.MapWithAdsViewModel.calculateDistanceFromUserToAd(ad: SmallMattersProject.Ad) -&gt; Swift.Optional&lt;Swift.Double&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "D0B5A65A-544B-4631-9437-EF4FE1A08C1B - 96dd46b5bc0e59e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;__C.YMKDrivingSummary&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SmallMattersProject.MapWithAdsViewModel.calculateDistanceFromUserToAd(ad: SmallMattersProject.Ad) -&gt; Swift.Optional&lt;Swift.Double&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "456">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "463154A3-A16C-4649-A380-0287790E3465"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "calculateDistanceFromUserToAd(ad:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C9987340-C365-4C54-A793-510421BEC524"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "setupAdInfoViewSubviewsConstraints()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - fa84a62ac044931"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.configureAdInfoView() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "980">
+               </Location>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - 1a246d07cdaf22f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (SnapKit.ConstraintMaker) -&gt; () in SmallMattersProject.MapWithAdsVC.configureAdInfoView() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - 8d96ab697b87da43"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.setupAdInfoViewSubviewsConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - 55f6569fcb28a8c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #6 (SnapKit.ConstraintMaker) -&gt; () in SmallMattersProject.MapWithAdsVC.setupAdInfoViewSubviewsConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - 8d96ab697b87dbc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.setupAdInfoViewSubviewsConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "C9987340-C365-4C54-A793-510421BEC524 - 55f6569fcb28a94c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #6 (SnapKit.ConstraintMaker) -&gt; () in SmallMattersProject.MapWithAdsVC.setupAdInfoViewSubviewsConstraints() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6434C148-BFBA-4BB6-B47F-A7E60D7974BA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "37227986-79CB-477E-A85A-4F240DF685C4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6FC4CB64-A8C9-42DA-98A5-C59B99FE7FAB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8D785DD-22DA-4426-91AA-73AB275A97AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51473C16-F7AC-4CC3-8CEB-F992A20E7FD1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D46CB59C-8AE2-4624-9E19-C2778F67BF19"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "userAvatarImageTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6B2B58F7-3AE9-426D-8478-1955D0CEFFDB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "userAvatarImageTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ABBD3E5F-CB99-4710-82F7-B0F0621A0E87"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Profile/ReviewCVCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "configureCell(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BC1F2251-20CE-4A34-9AE4-2BF66460BFF1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "createSubscriptionOnUserLocation()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B35CD28D-FC9C-473C-AD2F-132CD184EABF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "createSubscriptionOnUserLocation()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E8F89812-07C2-4AC6-B559-DB8E0C17B127"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "createSubscriptionOnUserLocation()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D3FECEC-A8E3-46E5-AF3C-5E3A6F264780"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "init()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D3FECEC-A8E3-46E5-AF3C-5E3A6F264780 - baaea1377216aae3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.init() -&gt; SmallMattersProject.MapWithAdsViewModel"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "664">
+               </Location>
+               <Location
+                  uuid = "8D3FECEC-A8E3-46E5-AF3C-5E3A6F264780 - baaea1377216aae3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.init() -&gt; SmallMattersProject.MapWithAdsViewModel"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "744">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "91E003EB-C82E-42A0-ADF6-D14A87B41441"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "createSubscriptionOnUserLocation()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "91E003EB-C82E-42A0-ADF6-D14A87B41441 - e0d703ed900a6487"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsVC.createSubscriptionOnUserLocation() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "306"
+                  endingLineNumber = "306"
+                  offsetFromSymbolStart = "656">
+               </Location>
+               <Location
+                  uuid = "91E003EB-C82E-42A0-ADF6-D14A87B41441 - 85a675942accdb97"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SmallMattersProject.Location) -&gt; () in SmallMattersProject.MapWithAdsVC.createSubscriptionOnUserLocation() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "306"
+                  endingLineNumber = "306"
+                  offsetFromSymbolStart = "748">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "MapWithAdsViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - baaea1377216aba5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.init() -&gt; SmallMattersProject.MapWithAdsViewModel"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "524">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - 516ef8765239bea6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of SmallMattersProject.MapWithAdsViewModel.userLocation : Swift.Optional&lt;SmallMattersProject.Location&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - b9ddecb7908f699"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.userLocation.getter : Swift.Optional&lt;SmallMattersProject.Location&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - 410af55e7a768ffd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.userLocation.setter : Swift.Optional&lt;SmallMattersProject.Location&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - ea8a89531a5470e2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.userLocation.modify : Swift.Optional&lt;SmallMattersProject.Location&gt;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - ef924a3ad9e5f271"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.userLocation.modify : Swift.Optional&lt;SmallMattersProject.Location&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - c52e02167c97b2ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.$userLocation.getter : Combine.Published&lt;Swift.Optional&lt;SmallMattersProject.Location&gt;&gt;.Publisher"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Map/Map%20with%20ads/MapWithAdsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - 15f77cd5ba5dfab1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.$userLocation.setter : Combine.Published&lt;Swift.Optional&lt;SmallMattersProject.Location&gt;&gt;.Publisher"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - 1173e025b47868a0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.$userLocation.modify : Combine.Published&lt;Swift.Optional&lt;SmallMattersProject.Location&gt;&gt;.Publisher"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "6058A18B-9C17-4D08-A052-E29DABC4BD3B - 4cb8562b5701c6d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.MapWithAdsViewModel.$userLocation.modify : Combine.Published&lt;Swift.Optional&lt;SmallMattersProject.Location&gt;&gt;.Publisher with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

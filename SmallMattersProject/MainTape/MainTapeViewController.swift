@@ -6,15 +6,30 @@
 //
 
 import UIKit
+import Combine
 
 protocol MainTapeViewControllerInterface: AnyObject {
-
+    
 }
 
 class MainTapeViewController: UIViewController, MainTapeViewControllerInterface {
 
+    //MARK: - Properties
+
     private var mainTapeView = MainTapeView()
     private var viewModel: MainTapeViewModelInterface?
+    private var subscriptions = Set<AnyCancellable>()
+
+    //MARK: - Initialization
+
+    init(viewModel: MainTapeViewModelInterface) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func loadView() {
         view = mainTapeView
@@ -23,39 +38,38 @@ class MainTapeViewController: UIViewController, MainTapeViewControllerInterface 
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTapeView.setupDelegate(delegate: self)
-        mainTapeView.backgroundColor = .white
+        createSubscriptionOnViewModel()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        updateDataSource()
-    }
+    //MARK: - Binding
 
-    init(viewModel: MainTapeViewModelInterface) {
-        super.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func updateDataSource() {
+    private func createSubscriptionOnViewModel() {
         if let viewModel = viewModel as? MainTapeViewModel {
-            viewModel.$ads
-                .compactMap{$0}
-                .sink { [weak self] ads in
-                    self?.mainTapeView.updateDataSource(newItems: ads)
-                }.cancel()
+            viewModel.$ads.sink { [weak self] ads in
+                self?.mainTapeView.updateDataSource(newItems: ads)
+            }.store(in: &subscriptions)
         }
     }
 }
 
 extension MainTapeViewController: MainTapeViewDelegate {
+
+    func updateCVDataSource() {
+        viewModel?.updateAllAds()
+    }
+    
     func didTapAddressButton() {
         let mapVM = MapViewModel()
         let mapVC = SelectLocationMapVC(viewModel: mapVM)
-        let NC = UINavigationController(rootViewController: mapVC)
-        NC.modalPresentationStyle = .fullScreen
-        present(NC, animated: true)
+        let mapNC = UINavigationController(rootViewController: mapVC)
+        mapNC.modalPresentationStyle = .fullScreen
+        present(mapNC, animated: true)
+    }
+
+    func filtersButtonTapped() {
+        let filtersVC = AdFiltersVC()
+        let filtersNC = UINavigationController(rootViewController: filtersVC)
+        filtersNC.modalPresentationStyle = .fullScreen
+        present(filtersNC, animated: true)
     }
 }

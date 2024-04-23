@@ -16,7 +16,7 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
 
     //MARK: - Properties
 
-    // Uses for select animation duration for current real user location
+    /// Uses for select animation duration for current real user location
     private var isFirstAnimation: Bool = true
 
     private lazy var mapView: YMKMapView = {
@@ -74,18 +74,16 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
         super.viewDidLoad()
         configureView()
         addMapTapListener()
+        createSubscriptions()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel?.updateUserRealLocation()
         setCurrentLocationPlacemark()
-        createSubscriptionOnSelectedLocation()
-        createSubscriptionOnAddressName()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        subscriptions.removeAll()
         isFirstAnimation = true
     }
 
@@ -235,6 +233,11 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
     }
 
     //MARK: - Binding
+
+    private func createSubscriptions() {
+        createSubscriptionOnAddressName()
+        createSubscriptionOnSelectedLocation()
+    }
 
     private func createSubscriptionOnSelectedLocation() {
         if let viewModel = viewModel as? MapViewModel {

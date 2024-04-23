@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Coordinates: Hashable {
+struct Location: Hashable {
     let latitude: Double
     let longitude: Double
 }
 
-extension Coordinates {
+extension Location {
     init(){
         latitude = 55.791941
         longitude = 49.126231

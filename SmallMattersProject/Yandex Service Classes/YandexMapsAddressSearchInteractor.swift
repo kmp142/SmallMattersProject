@@ -48,16 +48,12 @@ final class YandexMapsAddressSearchInteractor {
       )
     }
 
-    func searchAddressByCoordinates(latitude: Double, longitude: Double, completion: @escaping (YMKSearchResponse) -> Void) {
+    func searchAddressByCoordinates(latitude: Double, longitude: Double, completion: @escaping (YMKSearchResponse?, Error?) -> Void) {
 
         let point = YMKPoint(latitude: latitude, longitude: longitude)
 
         let responseHandler = { (searchResponse: YMKSearchResponse?, error: Error?) -> Void in
-            if let response = searchResponse {
-                completion(response)
-            } else {
-                print("error happened \(String(describing: error?.localizedDescription))")
-            }
+            completion(searchResponse, error)
         }
         
         searchSession = searchManager!.submit(

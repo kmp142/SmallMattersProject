@@ -21,7 +21,7 @@ class TabBarAssembly {
         let mapWithAdsVC = MapWithAdsVC(viewModel: mapWithAdsVM)
         mapWithAdsVC.title = "Карта"
 
-        let storageVC = ClassifiedsStorageViewController()
+        let storageVC = AdsStorageViewController()
         storageVC.title = "Объявления"
 
         let chatsListVC = ChatsListViewController()
