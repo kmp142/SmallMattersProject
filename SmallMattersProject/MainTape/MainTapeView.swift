@@ -17,21 +17,22 @@ protocol MainTapeViewDelegate: AnyObject {
     func didTapAddressButton()
     func updateCVDataSource()
     func filtersButtonTapped()
+    func didSelectAd(ad: Ad)
 }
 
     //TODO: - Replace button on view with tapGestureRecognizer
 
-class MainTapeView: UIView, UICollectionViewDelegate {
+class MainTapeView: UIView {
 
     // MARK: - Properties
 
     private lazy var addressButton: UIButton = configureAddressButton()
 
-    private lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "Введите название объявления"
-        searchBar.searchBarStyle = .minimal
-        return searchBar
+    private lazy var searchBar: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Введите название объявления"
+        tf.borderStyle = .roundedRect
+        return tf
     }()
 
     private lazy var filtersButton: UIButton = {
@@ -72,8 +73,7 @@ class MainTapeView: UIView, UICollectionViewDelegate {
     // MARK: - View configuration
 
     private func configureView() {
-        searchBar.addSubview(filtersButton)
-        addSubviews(addressButton, searchBar, adsCV)
+        addSubviews(addressButton, searchBar, adsCV, filtersButton)
         setupConstraints()
     }
 
@@ -102,6 +102,7 @@ class MainTapeView: UIView, UICollectionViewDelegate {
                                   collectionViewLayout: configureCVFlowLayout())
         cv.register(AdCVCell.self, forCellWithReuseIdentifier: AdCVCell.reuseIdentifier)
         cv.refreshControl = refreshControl
+        cv.delegate = self
         return cv
     }
 
@@ -126,17 +127,19 @@ class MainTapeView: UIView, UICollectionViewDelegate {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(16)
         }
 
-        searchBar.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(8)
-            make.top.equalTo(addressButton.snp.bottom).offset(4)
-            make.height.equalTo(40)
+        filtersButton.snp.makeConstraints { make in
+            make.height.width.equalTo(16)
+            make.centerY.equalTo(searchBar.snp.centerY)
+            make.right.equalToSuperview().offset(-16)
         }
 
-        filtersButton.snp.makeConstraints { make in
-            make.height.width.equalTo(searchBar.snp.height)
-            make.centerY.equalToSuperview()
-            make.right.equalTo(searchBar.snp.right).inset(12)
+        searchBar.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(12)
+            make.top.equalTo(addressButton.snp.bottom).offset(4)
+            make.right.equalTo(filtersButton.snp.left).offset(-12)
+            make.height.equalTo(30)
         }
+
 
         adsCV.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
@@ -181,8 +184,18 @@ class MainTapeView: UIView, UICollectionViewDelegate {
     }
 }
 
+extension MainTapeView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let ad = dataSource?.itemIdentifier(for: indexPath) {
+            delegate?.didSelectAd(ad: ad)
+        }
+    }
+}
+
 extension MainTapeView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
 }
+
+

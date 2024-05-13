@@ -149,7 +149,7 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
 
         adNameLabel.snp.makeConstraints { make in
             make.top.left.equalToSuperview().inset(8)
-            make.right.equalTo(hideAdInfoViewButton.snp.left).inset(4 )
+            make.right.equalTo(hideAdInfoViewButton.snp.left).offset(-4)
         }
 
         hideAdInfoViewButton.snp.makeConstraints { make in
@@ -213,7 +213,7 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
                 self.distanceToAdLabel.text = "\(Int(distance/1000)) км. от вас"
             }
         }
-        viewModel?.getSelectedAdAddressName(location: ad.location) { addressName in
+        viewModel?.getSelectedAdAddressName(location: Location(latitude: ad.locationLatitude, longitude: ad.locationLongitude)) { addressName in
             self.adAddressLabel.text = addressName
         }
     }
@@ -275,12 +275,14 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
             viewModel.$ads
                 .compactMap{ $0 }
                 .sink { [weak self] ads in
+
                     self?.removeAllPlacemarks()
                     for ad in ads {
-                        self?.addPlacemarkOnMap(latitude: ad.location.latitude, longitude: ad.location.longitude, tapListener: self, userData: ad, icon: UIImage(named: "bluePin")!)
+                        self?.addPlacemarkOnMap(latitude: ad.locationLatitude, longitude: ad.locationLongitude, tapListener: self, userData: ad, icon: UIImage(named: "bluePin")!)
                     }
                 }.store(in: &subscriptions)
         }
+
     }
 
     private func createSubscriptionOnSelectedAd() {

@@ -30,8 +30,8 @@
             filePath = "SmallMattersProject/App config/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "scene(_:willConnectTo:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -173,8 +173,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "calculateDistanceFromUserToAd(ad:completion:)"
             landmarkType = "7">
             <Locations>
@@ -221,8 +221,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "calculateDistanceFromUserToAd(ad:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -473,8 +473,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "createSubscriptionOnUserLocation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -489,8 +489,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "createSubscriptionOnUserLocation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -505,8 +505,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "createSubscriptionOnUserLocation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -569,8 +569,8 @@
             filePath = "SmallMattersProject/Map/Map with ads/MapWithAdsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "createSubscriptionOnUserLocation()"
             landmarkType = "7">
             <Locations>
@@ -771,6 +771,245 @@
                   startingLineNumber = "0"
                   endingLineNumber = "0"
                   offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A4181CAF-D2EE-431B-99EA-FAFD692F16F7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/MainTape/MainTapeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "updateAllAds()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "621F0A56-630E-456B-9CF1-6BD79634EAEE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/MainTape/MainTapeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "updateAllAds()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9DD8D709-E6AB-433E-8CA0-5AB98B9CC30A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/AdDetailsScreen/AdDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9DD8D709-E6AB-433E-8CA0-5AB98B9CC30A - 6afd1f290fc3fa2d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UICollectionView, Foundation.IndexPath, SmallMattersProject.AdDetailsCVItem) -&gt; Swift.Optional&lt;__C.UICollectionViewCell&gt; in SmallMattersProject.AdDetailsViewController.configureDataSource() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/AdDetailsScreen/AdDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "240">
+               </Location>
+               <Location
+                  uuid = "9DD8D709-E6AB-433E-8CA0-5AB98B9CC30A - 6afd1f290fc3fa2d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UICollectionView, Foundation.IndexPath, SmallMattersProject.AdDetailsCVItem) -&gt; Swift.Optional&lt;__C.UICollectionViewCell&gt; in SmallMattersProject.AdDetailsViewController.configureDataSource() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/AdDetailsScreen/AdDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C28E51C6-26C0-4606-BE72-4C9FB269A0DA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/AdDetailsScreen/AdDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "configureDataSource(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4480CDE4-98AA-49D6-B9B7-896F1DE1034D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/AdDetailsScreen/View/AdDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4480CDE4-98AA-49D6-B9B7-896F1DE1034D - ed98e9e7b277dc1d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UICollectionView, Foundation.IndexPath, SmallMattersProject.AdDetailsCVItem) -&gt; Swift.Optional&lt;__C.UICollectionViewCell&gt; in SmallMattersProject.AdDetailsViewController.configureDataSource() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/AdDetailsScreen/View/AdDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "684">
+               </Location>
+               <Location
+                  uuid = "4480CDE4-98AA-49D6-B9B7-896F1DE1034D - ed98e9e7b277dc22"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UICollectionView, Foundation.IndexPath, SmallMattersProject.AdDetailsCVItem) -&gt; Swift.Optional&lt;__C.UICollectionViewCell&gt; in SmallMattersProject.AdDetailsViewController.configureDataSource() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/AdDetailsScreen/View/AdDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "684">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8FB1B7E5-0B07-417C-892D-7EF8EB57928B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/AdDetailsScreen/View/AdDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "configureDataSource(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C06B7B1F-36FF-4A88-AEF7-8EAFB7B260F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/AdDetailsScreen/View/AdDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "configureDataSource()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "505753BD-53A6-45E5-809F-004BA515F5C7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmallMattersProject/Authentication/AuthVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "crossToMainTabBar(withUserId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "505753BD-53A6-45E5-809F-004BA515F5C7 - c8e10b9af57bd009"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.AuthVC.loginButtonTapped() -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Authentication/AuthVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "161"
+                  endingLineNumber = "161"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "505753BD-53A6-45E5-809F-004BA515F5C7 - 2a35a0d46b24762f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.AuthVC.crossToMainTabBar(withUserId: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Authentication/AuthVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "161"
+                  endingLineNumber = "161"
+                  offsetFromSymbolStart = "1552">
+               </Location>
+               <Location
+                  uuid = "505753BD-53A6-45E5-809F-004BA515F5C7 - 2a35a0d46b24703c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmallMattersProject.AuthVC.crossToMainTabBar(withUserId: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "SmallMattersProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cisco/Desktop/AgonaProject/SmallMattersProject/SmallMattersProject/Authentication/AuthVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "72">
                </Location>
             </Locations>
          </BreakpointContent>

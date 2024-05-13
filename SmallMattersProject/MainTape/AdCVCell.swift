@@ -98,15 +98,15 @@ class AdCVCell: UICollectionViewCell {
         bountyAmountLabel.text = "\(Int(ad.bounty)) р"
         deadlineLabel.text = "Срок исполнения: "
         deadlineIndicatorImageView.image = DeadlineIndicator.getImageByDeadline(date: ad.deadline)
-        distanceToAdLabel.text = "300м. от вас"
-        if let distanceToUser = ad.distanceToUser {
-            switch distanceToUser {
+//        distanceToAdLabel.text = "300м. от вас"
+//        if let distanceToUser = ad.distanceToUser {
+        switch ad.distanceToUser {
             case 0...9999:
-                distanceToAdLabel.text = "\(Int(distanceToUser)) м. от вас"
+            distanceToAdLabel.text = "\(Int(ad.distanceToUser)) м. от вас"
             default:
-                distanceToAdLabel.text = "\(Int(distanceToUser / 1000)) км. от вас"
+            distanceToAdLabel.text = "\(Int(ad.distanceToUser / 1000)) км. от вас"
             }
-        }
+//        }
     }
 
     private func addSubviews(subviews: UIView...) {

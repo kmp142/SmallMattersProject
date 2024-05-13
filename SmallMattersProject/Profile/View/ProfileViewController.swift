@@ -24,7 +24,7 @@ enum ProfileCVSection: Hashable {
     }
 }
 
-enum CVItem: Hashable {
+enum ProfileCVItem: Hashable {
     case user(user: User)
     case review(review: Review)
 }
@@ -39,8 +39,26 @@ class ProfileViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         cv.register(ReviewCVCell.self, forCellWithReuseIdentifier: ReviewCVCell.reuseIdentifier)
         cv.register(ProfileCVCell.self, forCellWithReuseIdentifier: ProfileCVCell.reuseIdentifier)
-        cv.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: HeaderSupplementaryView.self))
+        cv.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier:  HeaderSupplementaryView.reuseIdentifire)
         return cv
+    }()
+
+    private lazy var logInLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 25, weight: .semibold)
+        label.text = "Войти"
+        return label
+    }()
+
+    private lazy var logInView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .systemCyan
+        view.isHidden = true
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(logInViewTapped))
+        view.addGestureRecognizer(tapGR)
+        return view
     }()
 
     private var imagePicker: UIImagePickerController = {
@@ -49,27 +67,41 @@ class ProfileViewController: UIViewController {
         return picker
     }()
 
-    private var dataSource: UICollectionViewDiffableDataSource<ProfileCVSection, CVItem>?
+    private var dataSource: UICollectionViewDiffableDataSource<ProfileCVSection, ProfileCVItem>?
+
+    private var viewModel: ProfileViewModelInterface?
 
     //MARK: - Initialization
+
+    init(viewModel: ProfileViewModelInterface?) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         configureView()
         configureDataSource()
-        updateDataSource(reviews: [Review(),
-                                    Review(),
-                                    Review(),
-                                    Review()
-                                  ],
-                         user: User())
+        if let viewModel = viewModel as? ProfileViewModel, let user = viewModel.user {
+            updateDataSource(user: user)
+            logInView.isHidden = true
+        } else {
+            logInView.isHidden = false
+        }
+        configureNavigationBar()
     }
 
     //MARK: - View configuration
 
     private func configureView() {
         view.addSubview(profileAndReviewsCV)
+        view.addSubview(logInView)
+        logInView.addSubview(logInLabel)
         setupConstraints()
         imagePicker.delegate = self
     }
@@ -79,12 +111,32 @@ class ProfileViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.bottom.equalToSuperview()
         }
+
+        logInView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(16)
+            make.height.equalTo(52)
+            make.bottom.equalToSuperview().offset(-100)
+        }
+
+        logInLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+
+    private func configureNavigationBar() {
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"), style: .plain, target: self, action: nil)
+        backButton.primaryAction = UIAction { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        backButton.tintColor = .black
+        navigationController?.navigationBar.barTintColor = .white
+        self.navigationItem.leftBarButtonItem = backButton
     }
 
     //MARK: - DataSource
 
     private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<ProfileCVSection, CVItem>(collectionView: profileAndReviewsCV, cellProvider: { collectionView, indexPath, item in
+        dataSource = UICollectionViewDiffableDataSource<ProfileCVSection, ProfileCVItem>(collectionView: profileAndReviewsCV, cellProvider: { collectionView, indexPath, item in
             switch item {
             case .review(let review):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCVCell.reuseIdentifier, for: indexPath) as! ReviewCVCell
@@ -101,7 +153,7 @@ class ProfileViewController: UIViewController {
 
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             if kind == UICollectionView.elementKindSectionHeader {
-                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderSupplementaryView", for: indexPath) as! HeaderSupplementaryView
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderSupplementaryView.reuseIdentifire, for: indexPath) as! HeaderSupplementaryView
                 let title = self?.dataSource?.snapshot().sectionIdentifiers[indexPath.section].title
                 headerView.configureView(headerName:  title ?? "")
                 return headerView
@@ -110,12 +162,12 @@ class ProfileViewController: UIViewController {
         }
     }
 
-    func updateDataSource(reviews: [Review], user: User) {
-        var snapshot = NSDiffableDataSourceSnapshot<ProfileCVSection, CVItem>()
+    private func updateDataSource(user: User) {
+        var snapshot = NSDiffableDataSourceSnapshot<ProfileCVSection, ProfileCVItem>()
         snapshot.appendSections([.profile, .review])
-        let reviewsCVItems = reviews.map{ CVItem.review(review: $0)}
-        snapshot.appendItems(reviewsCVItems, toSection: .review)
-        snapshot.appendItems([CVItem.user(user: user)], toSection: .profile)
+        snapshot.appendItems([ProfileCVItem.user(user: user)], toSection: .profile)
+        let reviewCVItems = user.reviews.map{ ProfileCVItem.review(review: $0)}
+        snapshot.appendItems(reviewCVItems, toSection: .review)
         dataSource?.apply(snapshot)
     }
 
@@ -128,7 +180,7 @@ class ProfileViewController: UIViewController {
 
         let layoutConfig = UICollectionViewCompositionalLayoutConfiguration()
 
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, environment in
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, _ in
             switch sectionIndex {
             case 0:
                 return profileSection
@@ -149,7 +201,7 @@ class ProfileViewController: UIViewController {
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .estimated(200))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                             subitems: [item])
+                                                       subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: -16)
@@ -167,13 +219,22 @@ class ProfileViewController: UIViewController {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
 
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                    heightDimension: .absolute(50))
+                                                heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
 
         return section
+    }
+
+    //MARK: Objc targets
+
+    @objc private func logInViewTapped() {
+        let firebaseAuthManager = AuthManager()
+        let authVM = AuthViewModel(authManager: firebaseAuthManager)
+        let authVC = AuthVC(viewModel: authVM)
+        present(authVC, animated: true)
     }
 }
 
@@ -187,7 +248,7 @@ extension ProfileViewController: ProfileCVCellDelegate {
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage {
+        if let _ = info[.originalImage] as? UIImage {
             
         }
         dismiss(animated: true)

@@ -15,9 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let authVM = AuthViewModel()
+        let firebaseAuthManager = AuthManager()
+        let authVM = AuthViewModel(authManager: firebaseAuthManager)
         let authVC = AuthVC(viewModel: authVM)
         authVM.view = authVC
+
+        let userRepository = UserRepository<User>(context: PersistentContainer.shared.viewContext)
+        let loggedInUser = userRepository.fetchLoggedInUser()
+        if let user = loggedInUser {
+            userRepository.deleteFromCoreData(user)
+        }
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = TabBarAssembly().configureTabBar()

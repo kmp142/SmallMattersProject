@@ -23,6 +23,8 @@ class MainTapeViewModel: MainTapeViewModelInterface {
     }
 
     func updateAllAds() {
-        ads = AdsService.shared.getAdsFromServer()
+        AdsService.shared.getAdsFromServer { ads in
+            self.ads = ads
+        }
     }
 }

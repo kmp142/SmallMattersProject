@@ -84,7 +84,7 @@ class ProfileCVCell: UICollectionViewCell {
     //MARK: - View configuration
 
     func configureCell(with user: User) {
-        avatarImageView.image = user.image
+        avatarImageView.image = UIImage(named: "bluePin")
         avatarImageView.addGestureRecognizer(avatarTapGestureRecognizer)
         nicknameLabel.text = user.name
         ratingValueLabel.text = String(user.rating).prefix(3).replacingOccurrences(of: ".", with: ",")

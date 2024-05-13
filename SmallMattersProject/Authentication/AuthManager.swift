@@ -8,25 +8,25 @@
 import Foundation
 import FirebaseAuth
 
-class AuthManager {
+protocol AuthManagerInterface: AnyObject {
+    func signIn(
+        email: String,
+        password: String,
+        completion: @escaping (Result<Any, Error>) -> Void
+    )
+}
 
-    static let shared = AuthManager()
+class AuthManager: AuthManagerInterface {
 
     private let auth = Auth.auth()
 
-    private var verificationId: String?
-
-    private init(verificationId: String? = nil) {
-        self.verificationId = verificationId
-    }
-
-    private var currentUser: FirebaseAuth.User? {
+    var currentUser: FirebaseAuth.User? {
         return auth.currentUser
     }
 
     func signIn(email: String, 
                 password: String,
-                completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
+                completion: @escaping (Result<Any, Error>) -> Void) {
         auth.signIn(withEmail: email, password: password) { result, error in
             if let result = result {
                 completion(.success(result.user))

@@ -10,9 +10,18 @@ import Foundation
 // TODO: - Make viewModel logic
 
 protocol ProfileViewModelInterface {
-
+    func saveNewAvatarImage()
 }
 
 class ProfileViewModel: ProfileViewModelInterface {
-    
+
+    let user: User?
+
+    init(user: User?) {
+        self.user = user
+    }
+
+    func saveNewAvatarImage() {
+        
+    }
 }

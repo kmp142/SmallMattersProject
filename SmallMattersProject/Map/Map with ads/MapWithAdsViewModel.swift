@@ -32,7 +32,9 @@ class MapWithAdsViewModel: MapWithAdsViewModelInterface {
     }
 
     func updateAds() {
-        ads += AdsService.shared.getAdsFromServer()
+        AdsService.shared.getAdsFromServer {ads in
+            self.ads = ads
+        }
     }
 
     func calculateDistanceFromUserToAd(ad: Ad, completion: @escaping ((Double) -> Void)) {
@@ -41,7 +43,7 @@ class MapWithAdsViewModel: MapWithAdsViewModelInterface {
 
         let userPoint = YMKRequestPoint(point: YMKPoint(latitude: userLocation.latitude, longitude: userLocation.longitude), type: .waypoint, pointContext: nil, drivingArrivalPointId: nil)
 
-        let adPoint = YMKRequestPoint(point: YMKPoint(latitude: ad.location.latitude, longitude: ad.location.longitude), type: .waypoint, pointContext: nil, drivingArrivalPointId: nil)
+        let adPoint = YMKRequestPoint(point: YMKPoint(latitude: ad.locationLatitude, longitude: ad.locationLongitude), type: .waypoint, pointContext: nil, drivingArrivalPointId: nil)
 
         routeBuilder.calculateDistance(from: userPoint, to: adPoint){ routes, error in
             if let distanceToAd = routes?.first?.weight.distance.value {

@@ -41,6 +41,11 @@ class MainTapeViewController: UIViewController, MainTapeViewControllerInterface 
         createSubscriptionOnViewModel()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+
     //MARK: - Binding
 
     private func createSubscriptionOnViewModel() {
@@ -53,6 +58,13 @@ class MainTapeViewController: UIViewController, MainTapeViewControllerInterface 
 }
 
 extension MainTapeViewController: MainTapeViewDelegate {
+
+    func didSelectAd(ad: Ad) {
+        let viewModel = AdDetailsScreenViewModel(ad: ad)
+        let adDetailsVC = AdDetailsViewController(viewModel: viewModel)
+        navigationController?.pushViewController(adDetailsVC, animated: true)
+    }
+    
 
     func updateCVDataSource() {
         viewModel?.updateAllAds()
@@ -72,4 +84,6 @@ extension MainTapeViewController: MainTapeViewDelegate {
         filtersNC.modalPresentationStyle = .fullScreen
         present(filtersNC, animated: true)
     }
+
+
 }

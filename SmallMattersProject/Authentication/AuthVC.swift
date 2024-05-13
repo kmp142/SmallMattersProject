@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AuthVCInterface: AnyObject {
-    func crossToMainTabBar()
+    func crossToMainTabBar(withUserId: String?)
     func showLoginFailure()
 }
 
@@ -142,7 +142,7 @@ class AuthVC: UIViewController, AuthVCInterface {
         subviews.forEach { scrollView.addSubview($0) }
     }
 
-    func crossToMainTabBar() {
+    func crossToMainTabBar(withUserId: String?) {
         let tabBarController = TabBarAssembly().configureTabBar()
         tabBarController.modalPresentationStyle = .fullScreen
         present(tabBarController, animated: true)

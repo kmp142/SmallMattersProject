@@ -16,9 +16,8 @@ class AdsService {
 
     private(set) var ads: [Ad] = []
 
-    func getAdsFromServer() -> [Ad] {
-        return [Ad() ,Ad(), Ad(), Ad(), Ad(), Ad(),
-                   Ad() ,Ad(), Ad(), Ad(), Ad(), Ad()]
+    func getAdsFromServer(completion: @escaping ([Ad]) -> Void) {
+        completion([])
     }
 
     func getAdsWithDistanceFromUserDefaults() {
