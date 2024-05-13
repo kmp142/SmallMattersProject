@@ -165,8 +165,8 @@
 		AAA046BF2BE59082000FD308 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AAA046C02BE59082000FD308 /* Ad+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ad+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AAA046C12BE59082000FD308 /* Ad+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ad+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		AAA046C92BE5936A000FD308 /* Review+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Review+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		AAA046CA2BE5936A000FD308 /* Review+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Review+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		AAA046C92BE5936A000FD308 /* Review+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataClass.swift"; path = "SmallMattersProject/CoreData/CDModels/Review+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		AAA046CA2BE5936A000FD308 /* Review+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+CoreDataProperties.swift"; path = "SmallMattersProject/CoreData/CDModels/Review+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		AAA046CE2BE59628000FD308 /* PersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
 		AAA046D22BE74911000FD308 /* EntityRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityRepositoryInterface.swift; sourceTree = "<group>"; };
 		AAA046D42BE74982000FD308 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -385,19 +385,6 @@
 			path = "Filters Screen";
 			sourceTree = "<group>";
 		};
-		AAA046C82BE590A7000FD308 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				AAA046C92BE5936A000FD308 /* Review+CoreDataClass.swift */,
-				AAA046CA2BE5936A000FD308 /* Review+CoreDataProperties.swift */,
-				AAA046BE2BE59082000FD308 /* User+CoreDataClass.swift */,
-				AAA046BF2BE59082000FD308 /* User+CoreDataProperties.swift */,
-				AAA046C02BE59082000FD308 /* Ad+CoreDataClass.swift */,
-				AAA046C12BE59082000FD308 /* Ad+CoreDataProperties.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		AAA046CD2BE59612000FD308 /* UtilityClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,9 +396,9 @@
 		AAA046D02BE6E19E000FD308 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				AAE8A9F42BF29567006C566B /* CDModels */,
 				AAA046D12BE748EB000FD308 /* Repositories */,
 				AAA046CD2BE59612000FD308 /* UtilityClasses */,
-				AAA046C82BE590A7000FD308 /* Models */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -503,6 +490,19 @@
 				AAD8E4242BC0F1A60015BE2E /* UIVC + Extension .swift */,
 			);
 			path = Preview;
+			sourceTree = "<group>";
+		};
+		AAE8A9F42BF29567006C566B /* CDModels */ = {
+			isa = PBXGroup;
+			children = (
+				AAA046CA2BE5936A000FD308 /* Review+CoreDataProperties.swift */,
+				AAA046BE2BE59082000FD308 /* User+CoreDataClass.swift */,
+				AAA046C92BE5936A000FD308 /* Review+CoreDataClass.swift */,
+				AAA046BF2BE59082000FD308 /* User+CoreDataProperties.swift */,
+				AAA046C02BE59082000FD308 /* Ad+CoreDataClass.swift */,
+				AAA046C12BE59082000FD308 /* Ad+CoreDataProperties.swift */,
+			);
+			path = CDModels;
 			sourceTree = "<group>";
 		};
 		AAEAF03F2BAF867B00B8009C /* Map */ = {
