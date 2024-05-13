@@ -12,9 +12,11 @@ import CoreData
 
 extension Review {
 
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Review> {
         return NSFetchRequest<Review>(entityName: "Review")
     }
+    
 
     @NSManaged public var id: UUID
     @NSManaged public var publicationDate: Date
