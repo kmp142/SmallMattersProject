@@ -79,7 +79,8 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.updateUserRealLocation()
+        viewModel?.updateActiveUserLocation()
+        removeAllPlacemarks()
         setCurrentLocationPlacemark()
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -110,6 +111,12 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
                                          target: self,
                                          action: #selector(backButtonTapped))
         navigationItem.leftBarButtonItem = backButton
+
+        let confirmButton = UIBarButtonItem(barButtonSystemItem: .save,
+                                            target: self,
+                                            action: #selector(confirmAddressButtonTapped))
+
+        navigationItem.rightBarButtonItem = confirmButton
     }
 
     private func addObserversOnKeyboard() {
@@ -188,19 +195,16 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
     }
 
     private func setCurrentLocationPlacemark() {
-        if let viewModel = viewModel as? MapViewModel {
-            viewModel.$userRealLocation
-                .compactMap {$0}
-                .sink { coordinates in
-                let point = YMKPoint(latitude: coordinates!.latitude,
-                                     longitude: coordinates!.longitude)
-                self.removeAllPlacemarks()
-                self.addPlacemarkOnMap(latitude: point.latitude,
-                                       longitude: point.longitude)
-                self.moveMapCamera(toPoint: point,
-                                   zoom: 13,
-                                   animationDuration: self.isFirstAnimation ? 0 : 0.3)
-            }.cancel()
+
+        if let location = viewModel?.activeUserLocation {
+            let point = YMKPoint(latitude: location.latitude,
+                                 longitude: location.longitude)
+            self.removeAllPlacemarks()
+            self.addPlacemarkOnMap(latitude: point.latitude,
+                                   longitude: point.longitude)
+            self.moveMapCamera(toPoint: point,
+                               zoom: 13,
+                               animationDuration: self.isFirstAnimation ? 0 : 0.3)
         }
         self.isFirstAnimation = false
     }
@@ -235,29 +239,19 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
     //MARK: - Binding
 
     private func createSubscriptions() {
-        createSubscriptionOnAddressName()
-        createSubscriptionOnSelectedLocation()
-    }
 
-    private func createSubscriptionOnSelectedLocation() {
-        if let viewModel = viewModel as? MapViewModel {
-            viewModel.$currentSelectedLocation.sink { [weak self] coordinates in
-                guard let coordinates = coordinates, let self = self else { return }
+        viewModel?.currentSelectedLocationPublisher.sink {[weak self] coordinates in
+            guard let coordinates = coordinates, let self = self else { return }
 
-                let point = YMKPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
-                self.removeAllPlacemarks()
-                self.addPlacemarkOnMap(latitude: point.latitude, longitude: point.longitude)
-                self.moveMapCamera(toPoint: point, zoom: 17, animationDuration: 0.5)
-            }.store(in: &subscriptions)
-        }
-    }
+            let point = YMKPoint(latitude: coordinates.latitude, longitude: coordinates.longitude)
+            self.removeAllPlacemarks()
+            self.addPlacemarkOnMap(latitude: point.latitude, longitude: point.longitude)
+            self.moveMapCamera(toPoint: point, zoom: 17, animationDuration: 0.5)
+        }.store(in: &subscriptions)
 
-    private func createSubscriptionOnAddressName() {
-        if let viewModel = viewModel as? MapViewModel {
-            viewModel.$currentSelectedLocationAddress.sink { addressName in
-                self.searchBar.text = addressName
-            }.store(in: &subscriptions)
-        }
+        viewModel?.currentSelectedLocationAddressPublisher.sink {[weak self] addressName in
+            self?.searchBar.text = addressName
+        }.store(in: &subscriptions)
     }
 
     //MARK: - Objc targets
@@ -272,12 +266,17 @@ class SelectLocationMapVC: UIViewController, SelectLocationMapVCInterface {
         }
     }
 
+    @objc private func confirmAddressButtonTapped() {
+        viewModel?.saveSelectedLocation()
+        dismiss(animated: true)
+    }
+
     @objc private func keyboardWillHide(notification: Notification) {
         updateSearchBarBottomConstraints(bottomConstant: 24, height: 64)
     }
 
     @objc private func findUserLocationButtonTapped() {
-        viewModel?.updateUserRealLocation()
+        viewModel?.updateActiveUserLocation()
         setCurrentLocationPlacemark()
         searchBar.resignFirstResponder()
     }

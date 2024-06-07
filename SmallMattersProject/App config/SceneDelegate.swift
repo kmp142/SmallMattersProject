@@ -15,15 +15,51 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let firebaseAuthManager = AuthManager()
+        let firebaseAuthManager = AuthManager.shared
         let authVM = AuthViewModel(authManager: firebaseAuthManager)
         let authVC = AuthVC(viewModel: authVM)
         authVM.view = authVC
 
-        let userRepository = UserRepository<User>(context: PersistentContainer.shared.viewContext)
-        let loggedInUser = userRepository.fetchLoggedInUser()
-        if let user = loggedInUser {
-            userRepository.deleteFromCoreData(user)
+        let json = """
+        {
+            "adDescription": "Нужно будет свозить помыть машину на мойку по адресу ул. Измайлова, д. 28. Все каналы связи доступны, звоните или пишите в телеграм",
+            "bounty": 1000,
+            "deadline": "2024-06-27'12:00:00",
+            "distanceToUser": 300,
+            "id": "1",
+            "locationLatitude": 55.791941,
+            "locationLongitude": 49.126231,
+            "minimalExecutorRating": 5,
+            "title": "Свозить помыть машину",
+            "state": "active",
+            "authorId": "KbgV6C0z2dS2k9Usir0vWY2iVsZ2",
+            "executorId": "",
+            "review": {}
+          }
+        """
+
+        let decoder = JSONDecoder()
+        decoder.userInfo[CodingUserInfoKey.managedObjectContext] = PersistentContainer.shared.viewContext
+        let encoder = JSONEncoder()
+        encoder.userInfo[CodingUserInfoKey.managedObjectContext] = PersistentContainer.shared.viewContext
+
+        let ad = try? decoder.decode(Ad.self, from: json.data(using: .utf8)!)
+
+        let encodedJson = try? encoder.encode(ad)
+
+        if let json = encodedJson {
+            print("Энкодированный объект:\(String(data: json, encoding: .utf8) ?? "")")
+        }
+
+
+
+        let networkService = NetworkService()
+
+        if let ad = ad {
+            ad.distanceToUser = 12
+            Task{
+                try await networkService.updateAd(ad: ad)
+            }
         }
 
         window = UIWindow(windowScene: windowScene)

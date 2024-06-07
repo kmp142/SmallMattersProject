@@ -8,8 +8,14 @@
 import Foundation
 import YandexMapsMobile
 
-final class YandexMapsAddressSearchInteractor {
-    
+protocol SearchInteractor {
+    func searchAddressByString(_ address: String?, completion: @escaping (YMKSearchResponse) -> Void)
+
+    func searchAddressByCoordinates(latitude: Double, longitude: Double, completion: @escaping (YMKSearchResponse?, Error?) -> Void)
+}
+
+final class YandexMapsAddressSearchInteractor: SearchInteractor {
+
     lazy var searchManager: YMKSearchManager? = YMKSearch.sharedInstance().createSearchManager(with: .combined)
 
     var searchSession: YMKSearchSession?

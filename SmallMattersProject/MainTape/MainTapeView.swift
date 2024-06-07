@@ -26,7 +26,19 @@ class MainTapeView: UIView {
 
     // MARK: - Properties
 
-    private lazy var addressButton: UIButton = configureAddressButton()
+    private lazy var addressView: UIView = {
+        let view = UIView()
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAddressView))
+        view.addGestureRecognizer(tapGR)
+        return view
+    }()
+
+    private lazy var addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 25, weight: .semibold)
+        label.textColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        return label
+    }()
 
     private lazy var searchBar: UITextField = {
         let tf = UITextField()
@@ -73,28 +85,12 @@ class MainTapeView: UIView {
     // MARK: - View configuration
 
     private func configureView() {
-        addSubviews(addressButton, searchBar, adsCV, filtersButton)
+        addSubview(addressView)
+        addressView.addSubview(addressLabel)
+        addSubview(searchBar)
+        addSubview(adsCV)
+        addSubview(filtersButton)
         setupConstraints()
-    }
-
-    private func configureAddressButton() -> UIButton {
-        let button = UIButton()
-        button.setTitle("ул. Пушкина, 32", for: .normal)
-        button.configuration = .borderless()
-        button.configuration?.titleTextAttributesTransformer =
-           UIConfigurationTextAttributesTransformer { incoming in
-             var outgoing = incoming
-               outgoing.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-             return outgoing
-         }
-        let color = #colorLiteral(red: 1, green: 0.4874386787, blue: 0, alpha: 1)
-        button.setTitleColor(color, for: .normal)
-        button.setTitleColor(color, for: .highlighted)
-        button.contentHorizontalAlignment = .left
-        button.configuration?.titleAlignment = .leading
-        button.addTarget(self, action: #selector(didTapAddressButton), for: .touchUpInside)
-
-        return button
     }
 
     private func configureAdsCV() -> UICollectionView {
@@ -121,10 +117,14 @@ class MainTapeView: UIView {
     }
 
     private func setupConstraints() {
-        addressButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().inset(16)
+        addressView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(16)
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(16)
+            make.height.equalTo(40)
+        }
+
+        addressLabel.snp.makeConstraints { make in
+            make.left.right.centerY.equalToSuperview()
         }
 
         filtersButton.snp.makeConstraints { make in
@@ -135,11 +135,10 @@ class MainTapeView: UIView {
 
         searchBar.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(12)
-            make.top.equalTo(addressButton.snp.bottom).offset(4)
+            make.top.equalTo(addressView.snp.bottom).offset(4)
             make.right.equalTo(filtersButton.snp.left).offset(-12)
             make.height.equalTo(30)
         }
-
 
         adsCV.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
@@ -162,10 +161,16 @@ class MainTapeView: UIView {
     }
 
     func updateDataSource(newItems: [Ad]) {
-        var snapshot = NSDiffableDataSourceSnapshot<CVSection, Ad>()
-        snapshot.appendSections([CVSection.main])
-        snapshot.appendItems(newItems, toSection: .main)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        DispatchQueue.main.async {
+            var snapshot = NSDiffableDataSourceSnapshot<CVSection, Ad>()
+            snapshot.appendSections([CVSection.main])
+            snapshot.appendItems(newItems, toSection: .main)
+            self.dataSource?.apply(snapshot, animatingDifferences: true)
+        }
+    }
+
+    func changeAddressNameLabel(with: String) {
+        addressLabel.text = with
     }
 
     //MARK: - Objc targets
@@ -174,7 +179,7 @@ class MainTapeView: UIView {
         delegate?.filtersButtonTapped()
     }
 
-    @objc private func didTapAddressButton() {
+    @objc private func didTapAddressView() {
         delegate?.didTapAddressButton()
     }
 

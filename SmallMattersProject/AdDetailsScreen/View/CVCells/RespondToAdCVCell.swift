@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol RespondToAdCVCellDelegate {
-
+    func respondViewTapped()
 }
 
 class RespondToAdCVCell: UICollectionViewCell {
@@ -18,6 +18,8 @@ class RespondToAdCVCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0, green: 0.813554883, blue: 1, alpha: 1)
         view.layer.cornerRadius = 10
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(respondViewTapped))
+        view.addGestureRecognizer(tapGR)
         return view
     }()
 
@@ -62,5 +64,29 @@ class RespondToAdCVCell: UICollectionViewCell {
 
     func setupDelegate(_ delegate: RespondToAdCVCellDelegate) {
         self.delegate = delegate
+    }
+
+    func configureCell(ad: Ad) {
+        switch ad.state {
+        case "active":
+            respondLabel.text = "Откликнуться | \(Int(ad.bounty))"
+        case "executing":
+            respondLabel.text = "Подтвердить | \(Int(ad.bounty))"
+            respondView.backgroundColor = #colorLiteral(red: 1, green: 0.399265945, blue: 0.4059134126, alpha: 1)
+        case "executed":
+            respondLabel.text = "Выполнено | \(Int(ad.bounty))"
+            respondView.alpha = 0.5
+        case "deleted":
+            respondLabel.text = "Удалено | \(Int(ad.bounty))"
+        default:
+            respondView.isHidden = true
+        }
+
+    }
+
+    //MARK: - Objc targets
+
+    @objc private func respondViewTapped() {
+        delegate?.respondViewTapped()
     }
 }

@@ -71,7 +71,7 @@ class ReviewCVCell: UICollectionViewCell {
         adNameWithBountyLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(4)
             make.left.equalToSuperview().offset(16)
-            make.right.equalTo(starsStackView.snp.left)
+            make.right.equalTo(starsStackView.snp.left).offset(-4)
         }
 
         reviewTextLabel.snp.makeConstraints { make in
@@ -95,7 +95,7 @@ class ReviewCVCell: UICollectionViewCell {
     }
 
     func configureCell(with review: Review) {
-        adNameWithBountyLabel.text = "\(review.ad.name), \(Int(review.ad.bounty))р."
+        adNameWithBountyLabel.text = "\(review.adTitleAndBounty)"
         reviewTextLabel.text = review.text
 
         let dateFormatter = DateFormatter()

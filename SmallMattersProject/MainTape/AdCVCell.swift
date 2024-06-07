@@ -94,7 +94,7 @@ class AdCVCell: UICollectionViewCell {
     }
 
     func configureCell(with ad: Ad) {
-        adNameLabel.text = ad.name
+        adNameLabel.text = ad.title
         bountyAmountLabel.text = "\(Int(ad.bounty)) р"
         deadlineLabel.text = "Срок исполнения: "
         deadlineIndicatorImageView.image = DeadlineIndicator.getImageByDeadline(date: ad.deadline)

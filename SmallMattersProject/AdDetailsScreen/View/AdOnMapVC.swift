@@ -36,7 +36,6 @@ class AdOnMapVC: UIViewController {
         super.viewDidLoad()
         configureView()
         configureNavigationBar()
-        addPlacemarkOnMap(latitude: ad.locationLatitude, longitude: ad.locationLongitude)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +50,7 @@ class AdOnMapVC: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        addPlacemarkOnMap(latitude: ad.locationLatitude, longitude: ad.locationLongitude)
     }
 
     private func configureNavigationBar() {

@@ -33,7 +33,9 @@ class PersistentContainer {
             do {
                 try viewContext.save()
             } catch {
-                fatalError("\(error.localizedDescription)")
+                if let nsError = error as NSError? {
+                    fatalError("\(nsError.userInfo)")
+                }
             }
         }
     }
@@ -48,5 +50,9 @@ class PersistentContainer {
         } catch {
             fatalError()
         }
+    }
+
+    func deleteObject(_ object: NSManagedObject) {
+        viewContext.delete(object)
     }
 }

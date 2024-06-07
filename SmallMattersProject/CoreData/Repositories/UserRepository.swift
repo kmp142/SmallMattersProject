@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class UserRepository<User: NSManagedObject>: EntityRepositoryInterface {
+class UserRepository: EntityRepositoryInterface {
 
     var context: NSManagedObjectContext
     
@@ -21,17 +21,17 @@ class UserRepository<User: NSManagedObject>: EntityRepositoryInterface {
     func fetchAllFromCoreData() -> [User] {
         do {
             let fetchRequest = User.fetchRequest()
-            return try context.fetch(fetchRequest) as? [User] ?? []
+            return try context.fetch(fetchRequest)
         } catch {
-            fatalError("Error fetching entities: \(error)")
+            fatalError("Error fetching users: \(error)")
         }
     }
 
-    func saveToCoreData(_ entity: User) {
+    func saveContext() {
         do {
-            try entity.managedObjectContext?.save()
+            try context.save()
         } catch {
-            fatalError("Error saving entity: \(error)")
+            fatalError("Error saving context: \(error)")
         }
     }
 
@@ -43,7 +43,7 @@ class UserRepository<User: NSManagedObject>: EntityRepositoryInterface {
             if fetchedArray.count > 1 {
                 fatalError("LoggedIn users count more than 1")
             }
-            return fetchedArray.first as? User
+            return fetchedArray.first 
         } catch {
             fatalError("Error fetching loggedIn user: \(error)")
         }

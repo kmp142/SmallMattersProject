@@ -17,13 +17,6 @@ protocol EntityRepositoryInterface {
     //MARK: - Core data
 
     func fetchAllFromCoreData() -> [EntityType]
-    func saveToCoreData(_ entity: EntityType)
+    func saveContext()
     func deleteFromCoreData(_ entity: EntityType)
-//    func deleteAllEntitiesOfType(_: EntityType)
-
-    //MARK: - Network
-
-//    func fetchAllFromNetwork() async throws -> [EntityType]
-//    func saveOnServer(_ entity: EntityType) async throws
-//    func fetchById(id: String) async throws -> EntityType
 }

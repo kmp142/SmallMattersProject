@@ -32,12 +32,8 @@ class AuthViewModel: AuthViewModelInterface {
     func login(login: String, password: String) {
         authManager?.signIn(email: login, password: password) { result in
             switch result {
-            case .success(let user):
-                if let user = user as? FirebaseAuth.User {
-                    self.view?.crossToMainTabBar(withUserId: user.uid)
-                } else {
-                    self.view?.crossToMainTabBar(withUserId: nil)
-                }
+            case .success(_):
+                self.view?.backToMainTabBar()
             case .failure(_):
                 self.view?.showLoginFailure()
             }

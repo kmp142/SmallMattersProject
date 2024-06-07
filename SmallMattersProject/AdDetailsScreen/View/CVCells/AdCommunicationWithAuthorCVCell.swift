@@ -51,6 +51,9 @@ class AdCommunicationWithAuthorCVCell: UICollectionViewCell {
         return label
     }()
 
+    private var authorPhoneNumber: String?
+    private var authorTelegramNameId: String?
+
     private var delegate: AdCommunicationWithAuthorCVCellDelegate?
 
     //MARK: - Initialization
@@ -99,6 +102,12 @@ class AdCommunicationWithAuthorCVCell: UICollectionViewCell {
     func setupDelegate(_ delegate: AdCommunicationWithAuthorCVCellDelegate) {
         self.delegate = delegate
     }
+
+    func setCredentials(user: User) {
+        authorPhoneNumber = user.phoneNumber
+        authorTelegramNameId = user.telegramNameId
+    }
+
 
     //MARK: - Objc targets
 

@@ -23,22 +23,19 @@ enum AdDetailsCVItem: Hashable {
     case adSpecification(Ad)
     case adAuthorProfile(User)
     case adCommunicationWithAuthor(User)
-    case respondToAd
+    case respondToAd(Ad)
 }
 
-class AdDetailsViewController: UIViewController {
+protocol AdDetailsVCInterface: AnyObject {
+    func showFailureAlert()
+    func adSuccessfulResponded()
+}
+
+class AdDetailsViewController: UIViewController, AdDetailsVCInterface {
 
     //MARK: - Properties
 
     private lazy var collectionView: UICollectionView = configureCV()
-
-    private lazy var respondToAdLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 35, weight: .semibold)
-        label.text = "Откликнуться"
-        return label
-    }()
 
     private var dataSource: UICollectionViewDiffableDataSource<AdDetailsCVSection, AdDetailsCVItem>?
 
@@ -63,7 +60,7 @@ class AdDetailsViewController: UIViewController {
         configureDataSource()
         configureNavigationBar()
         if let viewModel = viewModel as? AdDetailsScreenViewModel {
-            configureDataSource(with: viewModel.ad)
+            configureDataSource(with: viewModel.ad, author: viewModel.adAuthor)
         }
     }
 
@@ -135,13 +132,15 @@ class AdDetailsViewController: UIViewController {
                 cell.configureCell(user: user)
                 cell.setupDelegate(self)
                 return cell
-            case .adCommunicationWithAuthor(_):
+            case .adCommunicationWithAuthor(let user):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdCommunicationWithAuthorCVCell.reuseIdentifier, for: indexPath) as! AdCommunicationWithAuthorCVCell
                 cell.setupDelegate(self)
+                cell.setCredentials(user: user)
                 return cell
-            case .respondToAd:
+            case .respondToAd(let ad):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RespondToAdCVCell.reuseIdentifier, for: indexPath) as! RespondToAdCVCell
                 cell.setupDelegate(self)
+                cell.configureCell(ad: ad)
                 return cell
             }
         })
@@ -163,17 +162,17 @@ class AdDetailsViewController: UIViewController {
         }
     }
 
-    func configureDataSource(with ad: Ad) {
+    func configureDataSource(with ad: Ad, author: User) {
         var snapshot = NSDiffableDataSourceSnapshot<AdDetailsCVSection, AdDetailsCVItem>()
         AdDetailsCVSection.allCases.forEach { section in
                 snapshot.appendSections([section])
         }
-        let adName = AdDetailsCVItem.adName(ad.name)
-        let adDescription = AdDetailsCVItem.adDescription(ad.description)
+        let adName = AdDetailsCVItem.adName(ad.title)
+        let adDescription = AdDetailsCVItem.adDescription(ad.adDescription)
         let adSpecifications = AdDetailsCVItem.adSpecification(ad)
-        let adAuthorProfile = AdDetailsCVItem.adAuthorProfile(ad.author)
-        let adCommunicationWithAuthor = AdDetailsCVItem.adCommunicationWithAuthor(ad.author)
-        let respondToAd = AdDetailsCVItem.respondToAd
+        let adAuthorProfile = AdDetailsCVItem.adAuthorProfile(author)
+        let adCommunicationWithAuthor = AdDetailsCVItem.adCommunicationWithAuthor(author)
+        let respondToAd = AdDetailsCVItem.respondToAd(ad)
         snapshot.appendItems([adName], toSection: .adName)
         snapshot.appendItems([adDescription], toSection: .adDescription)
         snapshot.appendItems([adSpecifications], toSection: .adSpecification)
@@ -319,6 +318,23 @@ class AdDetailsViewController: UIViewController {
     //MARK: - Objc targets
 
     @objc private func backButtonTapped() {
+        if let nc = navigationController {
+            nc.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
+    }
+
+    //MARK: - Delegation
+
+    func showFailureAlert() {
+        let alertController = UIAlertController(title: "Ошибка", message: "Во время отклика на объявление произошла ошибка", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Отменить", style: .cancel)
+        alertController.addAction(action)
+        present(alertController, animated: true)
+    }
+
+    func adSuccessfulResponded() {
         navigationController?.popViewController(animated: true)
     }
 }
@@ -337,25 +353,36 @@ extension AdDetailsViewController: AdSpecificationsCVCellDelegate {
 extension AdDetailsViewController: AdCommunicationWithAuthorCVCellDelegate {
 
     func callPressed() {
-        if let url = URL(string: "tel://+79373953301") {
+        guard let number = viewModel?.getUserPhoneNumber() else { return }
+        if let url = URL(string: "tel://\(number)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     func messagePressed() {
-        print("message pressed")
+        let telegramNameId = viewModel?.getUserTelegramNameId()
+        guard let tgId = telegramNameId else { return }
+        let telegramUrl = "https://t.me/\(tgId)"
+        if let url = URL(string: telegramUrl), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("Telegram is not installed or the URL is incorrect.")
+        }
     }
 }
 
 extension AdDetailsViewController: RespondToAdCVCellDelegate {
-
+    func respondViewTapped() {
+        viewModel?.respondeOnAdTapped()
+    }
 }
 
 extension AdDetailsViewController: AdAuthorProfileCVCellDelegate {
     func pressedOnProfileView() {
         if let viewModel = viewModel as? AdDetailsScreenViewModel {
-            let profileVM = ProfileViewModel(user: nil)
+            let profileVM = ProfileViewModel(user: viewModel.adAuthor, networkService: NetworkService())
             let profileVC = ProfileViewController(viewModel: profileVM)
+            profileVM.view = profileVC
             navigationController?.pushViewController(profileVC, animated: true)
         }
     }

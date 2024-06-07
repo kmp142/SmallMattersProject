@@ -25,11 +25,17 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
         return mapView!
     }()
 
+    private lazy var adInfoViewTapGR: UITapGestureRecognizer = {
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(adInfoViewTapped))
+        return tapGR
+    }()
+
     private lazy var adInfoView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
+        view.addGestureRecognizer(adInfoViewTapGR)
         return view
     }()
 
@@ -202,17 +208,16 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
     }
 
     private func configureAdInfoView(with ad: Ad) {
-        adNameLabel.text = ad.name
+        adNameLabel.text = ad.title
         adDeadlineIndicatorImageView.image = DeadlineIndicator.getImageByDeadline(date: ad.deadline)
         adBountyLabel.text = "\(Int(ad.bounty))р."
-        viewModel?.calculateDistanceFromUserToAd(ad: ad) { distance in
-            switch distance {
-            case 0...9999:
-                self.distanceToAdLabel.text = "\(Int(distance)) м. от вас"
-            default:
-                self.distanceToAdLabel.text = "\(Int(distance/1000)) км. от вас"
-            }
+        switch ad.distanceToUser {
+        case 0...9999:
+            self.distanceToAdLabel.text = "\(Int(ad.distanceToUser)) м. от вас"
+        default:
+            self.distanceToAdLabel.text = "\(Int(ad.distanceToUser/1000)) км. от вас"
         }
+        
         viewModel?.getSelectedAdAddressName(location: Location(latitude: ad.locationLatitude, longitude: ad.locationLongitude)) { addressName in
             self.adAddressLabel.text = addressName
         }
@@ -222,27 +227,28 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
 
     func addPlacemarkOnMap(latitude: Double, longitude: Double, tapListener: YMKMapObjectTapListener?, userData: Ad?, icon: UIImage) {
         let point = YMKPoint(latitude: latitude, longitude: longitude)
-        let viewPlacemark = mapView.mapWindow.map.mapObjects.addPlacemark()
-        viewPlacemark.geometry = point
+        DispatchQueue.main.async {
+            let viewPlacemark = self.mapView.mapWindow.map.mapObjects.addPlacemark()
+            viewPlacemark.geometry = point
 
-        viewPlacemark.setIconWith(
-            icon,
-            style: YMKIconStyle(
-                anchor: CGPoint(x: 0.2, y: 0.2) as NSValue,
-                rotationType: YMKRotationType.rotate.rawValue as NSNumber,
-                zIndex: 0,
-                flat: true,
-                visible: true,
-                scale: 0.15,
-                tappableArea: nil
+            viewPlacemark.setIconWith(
+                icon,
+                style: YMKIconStyle(
+                    anchor: CGPoint(x: 0.2, y: 0.2) as NSValue,
+                    rotationType: YMKRotationType.rotate.rawValue as NSNumber,
+                    zIndex: 0,
+                    flat: true,
+                    visible: true,
+                    scale: 0.15,
+                    tappableArea: nil
+                )
             )
-        )
 
-        if let tapListener = tapListener, let userData = userData {
-            viewPlacemark.addTapListener(with: tapListener)
-            viewPlacemark.userData = userData
+            if let tapListener = tapListener, let userData = userData {
+                viewPlacemark.addTapListener(with: tapListener)
+                viewPlacemark.userData = userData
+            }
         }
-
     }
 
     private func moveMapCamera(toPoint: YMKPoint, zoom: Float, animationDuration: Float) {
@@ -259,7 +265,9 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
     }
 
     private func removeAllPlacemarks() {
-        self.mapView.mapWindow.map.mapObjects.clear()
+        DispatchQueue.main.async {
+            self.mapView.mapWindow.map.mapObjects.clear()
+        }
     }
 
     //MARK: - Binding
@@ -318,6 +326,17 @@ class MapWithAdsVC: UIViewController, MapWithAdsVCInterface {
         setupAdInfoViewHideConstraints()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc private func adInfoViewTapped() {
+        Task { @MainActor in
+            let adAuthor: User? = await viewModel?.getSelectedAdAuthor()
+            if let viewModel = viewModel as? MapWithAdsViewModel, let author = adAuthor, let ad = viewModel.selectedAd {
+                let adDetailScreenVM = AdDetailsScreenViewModel(ad: ad, author: author, networkService: NetworkService())
+                let adDetailScreenVC = AdDetailsViewController(viewModel: adDetailScreenVM)
+                navigationController?.pushViewController(adDetailScreenVC, animated: true)
+            }
         }
     }
 }

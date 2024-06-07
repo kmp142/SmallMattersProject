@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AuthVCInterface: AnyObject {
-    func crossToMainTabBar(withUserId: String?)
+    func backToMainTabBar()
     func showLoginFailure()
 }
 
@@ -43,6 +43,7 @@ class AuthVC: UIViewController, AuthVCInterface {
         textField.borderStyle = .roundedRect
         textField.delegate = self
         textField.autocapitalizationType = .none
+        textField.isSecureTextEntry = true
         return textField
     }()
 
@@ -57,6 +58,25 @@ class AuthVC: UIViewController, AuthVCInterface {
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
         return imageView
+    }()
+
+    private lazy var invalidCredentialsView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.backgroundColor = .systemRed
+        view.backgroundColor = view.backgroundColor?.withAlphaComponent(0.4)
+        view.isHidden = true
+        return view
+
+    }()
+
+    private lazy var invalidCredentialLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Неверные данные"
+        label.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+        label.alpha = 1
+        label.font = .systemFont(ofSize: 20)
+        return label
     }()
 
     private lazy var loginButton: UIButton = {
@@ -94,14 +114,17 @@ class AuthVC: UIViewController, AuthVCInterface {
         super.viewDidLoad()
         view.backgroundColor = .white
         configureView()
+        configureNavigationBar()
     }
 
     //MARK: - View configuration
 
     private func configureView() {
         view.addSubview(scrollView)
-        addSubviewsToScrollView(subviews: logoImageView, credentialsStackView, loginButton, registrationButton)
+        invalidCredentialsView.addSubview(invalidCredentialLabel)
+        addSubviewsToScrollView(subviews: logoImageView, credentialsStackView, loginButton, registrationButton, invalidCredentialsView)
         scrollView.addTapGestureToDismissKeyboard()
+
         setupConstraints()
     }
 
@@ -117,6 +140,17 @@ class AuthVC: UIViewController, AuthVCInterface {
             make.height.equalTo(100)
             make.centerX.equalToSuperview()
             make.top.equalTo(logoImageView.snp.bottom).inset(-32)
+        }
+
+        invalidCredentialsView.snp.makeConstraints { make in
+            make.height.equalTo(36)
+            make.bottom.equalTo(credentialsStackView.snp.top).offset(-8)
+            make.width.equalTo(credentialsStackView.snp.width)
+            make.centerX.equalToSuperview()
+        }
+
+        invalidCredentialLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
         }
 
         loginButton.snp.makeConstraints { make in
@@ -138,24 +172,34 @@ class AuthVC: UIViewController, AuthVCInterface {
         }
     }
 
+    private func configureNavigationBar() {
+        let backButton = UIBarButtonItem(barButtonSystemItem: .close,
+                                         target: self,
+                                         action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+    }
+
     private func addSubviewsToScrollView(subviews: UIView...) {
         subviews.forEach { scrollView.addSubview($0) }
     }
 
-    func crossToMainTabBar(withUserId: String?) {
-        let tabBarController = TabBarAssembly().configureTabBar()
-        tabBarController.modalPresentationStyle = .fullScreen
-        present(tabBarController, animated: true)
+    func backToMainTabBar() {
+        invalidCredentialsView.isHidden = true
+        dismiss(animated: true)
     }
 
     func showLoginFailure() {
-        print("login failed")
+        invalidCredentialsView.isHidden = false
     }
 
     //MARK: - Objc targets
 
     @objc private func loginButtonTapped() {
         viewModel?.login(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+    }
+
+    @objc private func backButtonTapped() {
+        dismiss(animated: true)
     }
 
 }

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import PhotosUI
+import Combine
 
 enum ProfileCVSection: Hashable {
     case review
@@ -29,9 +30,13 @@ enum ProfileCVItem: Hashable {
     case review(review: Review)
 }
 
+protocol ProfileViewControllerInterface: AnyObject {
+    func updateCollectionView()
+}
+
 //TODO: - Tie with viewModel
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, ProfileViewControllerInterface {
 
     //MARK: - Properties
 
@@ -71,6 +76,10 @@ class ProfileViewController: UIViewController {
 
     private var viewModel: ProfileViewModelInterface?
 
+    private var subscriptions = Set<AnyCancellable>()
+
+    private var isEditingEnable: Bool?
+
     //MARK: - Initialization
 
     init(viewModel: ProfileViewModelInterface?) {
@@ -87,13 +96,19 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         configureView()
         configureDataSource()
+        configureNavigationBar()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
         if let viewModel = viewModel as? ProfileViewModel, let user = viewModel.user {
-            updateDataSource(user: user)
+            updateDataSource(user: user, reviews: viewModel.reviews)
             logInView.isHidden = true
+            profileAndReviewsCV.isHidden = false
         } else {
             logInView.isHidden = false
+            profileAndReviewsCV.isHidden = true
         }
-        configureNavigationBar()
+        subscribeOnViewModel()
     }
 
     //MARK: - View configuration
@@ -128,6 +143,7 @@ class ProfileViewController: UIViewController {
         backButton.primaryAction = UIAction { [weak self] _ in
             self?.navigationController?.popViewController(animated: true)
         }
+        backButton.style = .done
         backButton.tintColor = .black
         navigationController?.navigationBar.barTintColor = .white
         self.navigationItem.leftBarButtonItem = backButton
@@ -147,6 +163,9 @@ class ProfileViewController: UIViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCVCell.reuseIdentifier, for: indexPath) as! ProfileCVCell
                 cell.configureCell(with: user)
                 cell.delegate = self
+                if let value = self.isEditingEnable, !value {
+                    cell.disableEditing()
+                }
                 return cell
             }
         })
@@ -162,13 +181,17 @@ class ProfileViewController: UIViewController {
         }
     }
 
-    private func updateDataSource(user: User) {
-        var snapshot = NSDiffableDataSourceSnapshot<ProfileCVSection, ProfileCVItem>()
-        snapshot.appendSections([.profile, .review])
-        snapshot.appendItems([ProfileCVItem.user(user: user)], toSection: .profile)
-        let reviewCVItems = user.reviews.map{ ProfileCVItem.review(review: $0)}
-        snapshot.appendItems(reviewCVItems, toSection: .review)
-        dataSource?.apply(snapshot)
+    private func updateDataSource(user: User, reviews: [Review]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            var snapshot = NSDiffableDataSourceSnapshot<ProfileCVSection, ProfileCVItem>()
+            snapshot.appendSections([.profile, .review])
+            snapshot.appendItems([ProfileCVItem.user(user: user)], toSection: .profile)
+            let reviewCVItems = reviews.map{ ProfileCVItem.review(review: $0)}
+            snapshot.appendItems(reviewCVItems, toSection: .review)
+            self.dataSource?.apply(snapshot)
+        }
     }
 
     //MARK: - CollectionView compositionalLayout
@@ -231,10 +254,51 @@ class ProfileViewController: UIViewController {
     //MARK: Objc targets
 
     @objc private func logInViewTapped() {
-        let firebaseAuthManager = AuthManager()
+        let firebaseAuthManager = AuthManager.shared
         let authVM = AuthViewModel(authManager: firebaseAuthManager)
         let authVC = AuthVC(viewModel: authVM)
-        present(authVC, animated: true)
+        let authNC = UINavigationController(rootViewController: authVC)
+        authNC.modalPresentationStyle = .fullScreen
+        authVM.view = authVC
+        present(authNC, animated: true)
+    }
+
+    //MARK: - Binding
+
+    private func subscribeOnViewModel() {
+        if let viewModel = viewModel as? ProfileViewModel {
+            viewModel.$user.sink { [weak self] user in
+                if let user = user {
+                    DispatchQueue.main.async {
+                        self?.updateDataSource(user: user, reviews: viewModel.reviews)
+                        self?.profileAndReviewsCV.isHidden = false
+                        self?.logInView.isHidden = true
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self?.profileAndReviewsCV.isHidden = true
+                        self?.logInView.isHidden = false
+                    }
+                }
+            }.store(in: &subscriptions)
+
+            viewModel.$reviews.sink { [weak self] reviews in
+                guard let user = viewModel.user else { return }
+                DispatchQueue.main.async {
+                    self?.updateDataSource(user: user, reviews: viewModel.reviews)
+                }
+            }.store(in: &subscriptions)
+
+            viewModel.$isEditingEnable.sink { [weak self] isEditingEnable in
+                self?.isEditingEnable = isEditingEnable
+            }.store(in: &subscriptions)
+        }
+    }
+
+    //MARK: - Interface implementation
+
+    func updateCollectionView() {
+        profileAndReviewsCV.reloadData()
     }
 }
 
@@ -242,15 +306,27 @@ extension ProfileViewController: ProfileCVCellDelegate {
     func userAvatarImageTapped() {
         present(imagePicker, animated: true)
     }
+
+    func logOutButtonTapped() {
+        let alertContorller = UIAlertController(title: "Выход", message: "Вы действительно хотите выйти из аккаунта?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        let logOutAction = UIAlertAction(title: "Выйти", style: .destructive) { action in
+            AuthManager.shared.logOut()
+        }
+        alertContorller.addAction(cancelAction)
+        alertContorller.addAction(logOutAction)
+        show(alertContorller, sender: nil)
+    }
 }
 
 //TODO: - Save photo into user inside viewModel
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let _ = info[.originalImage] as? UIImage {
-            
+        if let pickedImageURL = info[.imageURL] as? URL {
+            viewModel?.saveNewAvatarImage(imagePath: pickedImageURL.path)
         }
+        dismiss(animated: true, completion: nil)
         dismiss(animated: true)
     }
 }

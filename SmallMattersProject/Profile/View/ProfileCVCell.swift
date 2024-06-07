@@ -10,6 +10,7 @@ import UIKit
 
 protocol ProfileCVCellDelegate: AnyObject {
     func userAvatarImageTapped()
+    func logOutButtonTapped()
 }
 
 class ProfileCVCell: UICollectionViewCell {
@@ -68,6 +69,13 @@ class ProfileCVCell: UICollectionViewCell {
         return tapGR
     }()
 
+    private lazy var logOutButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
+        button.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     weak var delegate: ProfileCVCellDelegate?
 
     //MARK: - Initialization
@@ -76,7 +84,7 @@ class ProfileCVCell: UICollectionViewCell {
         super.init(frame: .zero)
         configureContentView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,7 +92,15 @@ class ProfileCVCell: UICollectionViewCell {
     //MARK: - View configuration
 
     func configureCell(with user: User) {
-        avatarImageView.image = UIImage(named: "bluePin")
+        let imagePath = user.imageLink
+
+        let isCustomeAvatarExist = FileManager.default.fileExists(atPath: imagePath)
+
+        if isCustomeAvatarExist {
+            avatarImageView.image = UIImage(contentsOfFile: imagePath)
+        } else {
+            avatarImageView.image = UIImage(named: "defaultAvatar")
+        }
         avatarImageView.addGestureRecognizer(avatarTapGestureRecognizer)
         nicknameLabel.text = user.name
         ratingValueLabel.text = String(user.rating).prefix(3).replacingOccurrences(of: ".", with: ",")
@@ -102,6 +118,7 @@ class ProfileCVCell: UICollectionViewCell {
         contentView.addSubview(ratingStarsStackView)
         contentView.addSubview(tasksResolvedByUserLabel)
         contentView.addSubview(tasksResolvedForUserLabel)
+        contentView.addSubview(logOutButton)
         setupConstraints()
         avatarImageView.addGestureRecognizer(avatarTapGestureRecognizer)
     }
@@ -112,6 +129,13 @@ class ProfileCVCell: UICollectionViewCell {
             make.height.width.equalTo(100)
             make.top.equalToSuperview().offset(16)
             make.left.equalToSuperview()
+        }
+
+        logOutButton.snp.makeConstraints { make in
+            make.width.height.equalTo(60)
+            make.right.equalToSuperview().offset(-16)
+            make.top.equalTo(avatarImageView.snp.top)
+
         }
 
         nicknameLabel.snp.makeConstraints { make in
@@ -134,7 +158,7 @@ class ProfileCVCell: UICollectionViewCell {
         tasksResolvedByUserLabel.snp.makeConstraints { make in
             make.left.equalTo(ratingValueLabel.snp.left)
             make.top.equalTo(ratingValueLabel.snp.bottom)
-            .offset(12)
+                .offset(12)
         }
 
         tasksResolvedForUserLabel.snp.makeConstraints { make in
@@ -143,9 +167,18 @@ class ProfileCVCell: UICollectionViewCell {
         }
     }
 
+    func disableEditing() {
+        logOutButton.isHidden = true
+        delegate = nil
+    }
+
     //MARK: - Objc targets
 
     @objc private func avatarImageViewTapped() {
         delegate?.userAvatarImageTapped()
+    }
+
+    @objc private func logOutButtonTapped() {
+        delegate?.logOutButtonTapped()
     }
 }

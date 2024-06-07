@@ -2,7 +2,7 @@
 //  Review+CoreDataProperties.swift
 //  SmallMattersProject
 //
-//  Created by Dmitry on 04.05.2024.
+//  Created by Dmitry on 20.05.2024.
 //
 //
 
@@ -12,18 +12,19 @@ import CoreData
 
 extension Review {
 
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Review> {
         return NSFetchRequest<Review>(entityName: "Review")
     }
-    
 
-    @NSManaged public var id: UUID
+    @NSManaged public var adId: String
+    @NSManaged public var authorId: String
+    @NSManaged public var id: String
     @NSManaged public var publicationDate: Date
+    @NSManaged public var receiverId: String
     @NSManaged public var text: String
-    @NSManaged public var value: Int
-    @NSManaged public var ad: Ad
-    @NSManaged public var author: User
+    @NSManaged public var value: Int16
+    @NSManaged public var adTitleAndBounty: String
+
 }
 
 extension Review : Identifiable {

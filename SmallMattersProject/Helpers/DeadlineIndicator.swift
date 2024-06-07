@@ -21,7 +21,7 @@ class DeadlineIndicator {
         case 3...24:
             let blue = #colorLiteral(red: 0.4115773439, green: 0.793646872, blue: 1, alpha: 1)
             image = image?.withTintColor(blue)
-        case 24...48:
+        case 24...10000:
             let green = #colorLiteral(red: 0.4513883591, green: 1, blue: 0.672924757, alpha: 1)
             image = image?.withTintColor(green)
         default: break

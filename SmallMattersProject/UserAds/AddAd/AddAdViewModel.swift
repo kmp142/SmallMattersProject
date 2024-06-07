@@ -1,57 +1,54 @@
 //
-//  MapViewModel.swift
+//  AddAdViewModel.swift
 //  SmallMattersProject
 //
-//  Created by Dmitry on 26.03.2024.
+//  Created by Dmitry on 27.05.2024.
 //
 
-import Combine
-import UIKit
+import Foundation
 import YandexMapsMobile
+import Combine
 
-protocol SelectLocationMapViewModelInterface {
-    func updateActiveUserLocation()
-    func updateCurrentSelectedLocation(with: YMKPoint)
-    func setAddressCoordinatesByName(addressName: String)
-    func setAddressNameByCoordinates(with: YMKPoint)
-    func saveSelectedLocation()
-
-    var activeUserLocation: Location? { get }
-    var activeUserLocationPublished: Published<Location?>.Publisher { get }
-
-    var currentSelectedLocation: Location? { get }
-    var currentSelectedLocationPublisher: Published<Location?>.Publisher { get }
-
-    var currentSelectedLocationAddress: String? { get }
-    var currentSelectedLocationAddressPublisher: Published<String?>.Publisher { get }
+protocol AddAdViewModelInterface {
+    func publicAd(title: String, description: String, deadline: Date, minimalExecutorRating: Int, bounty: Double) async
 }
 
-class MapViewModel: SelectLocationMapViewModelInterface {
+class AddAdViewModel: AddAdViewModelInterface {
 
     //MARK: - Properties
 
-    // Stores user location by phone geoposition
     @Published var activeUserLocation: Location?
     var activeUserLocationPublished: Published<Location?>.Publisher { $activeUserLocation }
+    private lazy var searchManager = YandexMapsAddressSearchInteractor()
 
     @Published var currentSelectedLocation: Location?
     var currentSelectedLocationPublisher: Published<Location?>.Publisher { $currentSelectedLocation }
 
     @Published var currentSelectedLocationAddress: String?
     var currentSelectedLocationAddressPublisher: Published<String?>.Publisher { $currentSelectedLocationAddress }
-    
-    private lazy var searchManager = YandexMapsAddressSearchInteractor()
 
-    init() {
-        updateActiveUserLocation()
+    private var adAddressName: String?
+    private var adAddressLocation: Location?
+
+    private var networkService: NetworkServiceInterface?
+    weak var view: AddAdVCInterface?
+
+    private var activeUser: User?
+
+    //MARK: - Initialization
+
+    init(activeUser: User?, activeUserLocation: Location, networkService: NetworkServiceInterface) {
+        self.activeUser = activeUser
+        self.activeUserLocation = activeUserLocation
+        self.networkService = networkService
     }
+}
 
-    //MARK: Location
-
+extension AddAdViewModel: SelectLocationMapViewModelInterface {
+    
     func updateActiveUserLocation() {
-        let user = AuthManager.shared.activeUser
 
-        if let user = user {
+        if let user = activeUser {
             self.activeUserLocation = Location(latitude: user.locationLatitude, longitude: user.locationLongitude)
             self.setAddressNameByCoordinates(with: YMKPoint(latitude: user.locationLatitude, longitude: user.locationLongitude))
         } else {
@@ -84,7 +81,7 @@ class MapViewModel: SelectLocationMapViewModelInterface {
                     }
                 }
                 if let _ = error {
-                    
+
                 }
             }
         }
@@ -103,13 +100,38 @@ class MapViewModel: SelectLocationMapViewModelInterface {
     }
 
     func saveSelectedLocation() {
-        DispatchQueue.main.async {
-            let user = AuthManager.shared.activeUser
-            if let user = user, let currentLocation = self.currentSelectedLocation {
-                user.locationLatitude = currentLocation.latitude
-                user.locationLongitude = currentLocation.longitude
-                PersistentContainer.shared.saveContext()
+        view?.setAddressName(addressName: currentSelectedLocationAddress)
+    }
+
+
+    //MARK: - Interface implementation
+
+    func publicAd(title: String, description: String, deadline: Date, minimalExecutorRating: Int, bounty: Double) async {
+          if let user = activeUser {
+            let context = PersistentContainer.shared.viewContext
+            let ad = Ad(context: context)
+            ad.distanceToUser = Double.random(in: 200...1000)
+
+            if let latitude = currentSelectedLocation?.latitude, let longitude = currentSelectedLocation?.longitude {
+                ad.locationLatitude = latitude
+                ad.locationLongitude = longitude
+            } else {
+                ad.locationLatitude = user.locationLatitude
+                ad.locationLongitude = user.locationLongitude
             }
+
+            ad.deadline = deadline
+            ad.bounty = bounty
+            ad.authorId = user.id
+            ad.title = title
+            ad.adDescription = description
+            ad.id = "\(Int.random(in: 100...10000))"
+            ad.executorId = nil
+            ad.state = "active"
+            ad.minimalExecutorRating = Int16(minimalExecutorRating)
+              Task {
+                  try await networkService?.publicAd(ad)
+              }
         }
     }
 }

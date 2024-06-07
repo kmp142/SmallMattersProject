@@ -44,14 +44,25 @@ class MainTapeViewController: UIViewController, MainTapeViewControllerInterface 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        viewModel?.fetchActiveUserLocation()
     }
 
     //MARK: - Binding
 
     private func createSubscriptionOnViewModel() {
         if let viewModel = viewModel as? MainTapeViewModel {
-            viewModel.$ads.sink { [weak self] ads in
+            
+            viewModel.$adsWithUsers.sink { [weak self] adsWithUsers in
+                let ads = Array(adsWithUsers.keys)
                 self?.mainTapeView.updateDataSource(newItems: ads)
+            }.store(in: &subscriptions)
+
+            viewModel.$locationAddressName.sink { [weak self] addressName in
+                if let address = addressName {
+                    self?.mainTapeView.changeAddressNameLabel(with: address)
+                } else {
+                    self?.mainTapeView.changeAddressNameLabel(with: "Ваш адрес")
+                }
             }.store(in: &subscriptions)
         }
     }
@@ -60,14 +71,17 @@ class MainTapeViewController: UIViewController, MainTapeViewControllerInterface 
 extension MainTapeViewController: MainTapeViewDelegate {
 
     func didSelectAd(ad: Ad) {
-        let viewModel = AdDetailsScreenViewModel(ad: ad)
-        let adDetailsVC = AdDetailsViewController(viewModel: viewModel)
+        let author = viewModel?.fetchAuthorForAd(ad: ad)
+        guard let author = author else { return }
+        let adDetailsVM = AdDetailsScreenViewModel(ad: ad, author: author, networkService: NetworkService())
+        let adDetailsVC = AdDetailsViewController(viewModel: adDetailsVM)
+        adDetailsVM.view = adDetailsVC
         navigationController?.pushViewController(adDetailsVC, animated: true)
     }
-    
 
     func updateCVDataSource() {
         viewModel?.updateAllAds()
+        viewModel?.fetchActiveUserLocation()
     }
     
     func didTapAddressButton() {
@@ -79,10 +93,13 @@ extension MainTapeViewController: MainTapeViewDelegate {
     }
 
     func filtersButtonTapped() {
-        let filtersVC = AdFiltersVC()
-        let filtersNC = UINavigationController(rootViewController: filtersVC)
-        filtersNC.modalPresentationStyle = .fullScreen
-        present(filtersNC, animated: true)
+        if let viewModel = viewModel {
+            let filtersVC = AdFiltersVC(viewModel: viewModel)
+            let filtersNC = UINavigationController(rootViewController: filtersVC)
+            filtersNC.modalPresentationStyle = .fullScreen
+            present(filtersNC, animated: true)
+        }
+
     }
 
 

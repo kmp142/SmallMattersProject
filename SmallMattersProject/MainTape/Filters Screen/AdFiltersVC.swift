@@ -104,8 +104,19 @@ class AdFiltersVC: UIViewController, AdFiltersVCInterface {
         return tapGR
     }()
 
+    private let viewModel: MainTapeViewModelInterface?
+
     //MARK: - Initialization
 
+    init(viewModel: MainTapeViewModelInterface) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -201,12 +212,35 @@ class AdFiltersVC: UIViewController, AdFiltersVCInterface {
 
     //TODO: save settings into viewModel
     @objc private func saveFiltersButtonTapped() {
+        if let viewModel = viewModel as? MainTapeViewModel {
+            let minimalBountyAmount = Double(bountyFromTextField.text ?? "0")
+            let maximumBountyAmount = Double(bountyToTextField.text ?? "0")
+            let minimalDistanceToUser = Double(distanceFromValueTextField.text ?? "0")
+            let maximumDistanceToUser = Double(distanceToValueTextField.text ?? "0")
+            var hoursToDeadline = 0...0
+            switch deadlineSegmentedControl.selectedSegmentIndex {
+            case 0:
+                hoursToDeadline = 0...3
+            case 1:
+                hoursToDeadline = 3...24
+            case 2:
+                hoursToDeadline = 24...10000
+            default:
+                hoursToDeadline = 0...10000
+            }
 
+            viewModel.adsBountyRange = (minimalBountyAmount ?? 0)...(maximumBountyAmount ?? 0)
+            viewModel.adsDistanceToUserRange = (minimalDistanceToUser ?? 0)...(maximumDistanceToUser ?? 0)
+            viewModel.hoursToDeadline = hoursToDeadline
+            viewModel.filterAds()
+        }
+        dismiss(animated: true)
     }
 
     @objc private func viewTapped() {
         view.endEditing(true)
     }
+
 }
 
 

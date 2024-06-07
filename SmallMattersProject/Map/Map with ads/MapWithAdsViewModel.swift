@@ -11,9 +11,9 @@ import Combine
 
 protocol MapWithAdsViewModelInterface {
     func updateAds()
-    func updateUserLocation()
     func calculateDistanceFromUserToAd(ad: Ad, completion: @escaping ((Double) -> Void))
     func getSelectedAdAddressName(location: Location, completion: @escaping (String) -> Void)
+    func getSelectedAdAuthor() async -> User?
 }
 
 class MapWithAdsViewModel: MapWithAdsViewModelInterface {
@@ -25,15 +25,17 @@ class MapWithAdsViewModel: MapWithAdsViewModelInterface {
     let routeBuilder = YRouteBuilder()
     let addressSearchInteractor = YandexMapsAddressSearchInteractor()
     private var userLocationSubcription: AnyCancellable?
+    let networkService: NetworkServiceInterface?
 
-    init() {
+    init (networkService: NetworkServiceInterface) {
+        self.networkService = networkService
         updateAds()
-        updateUserLocation()
     }
 
     func updateAds() {
-        AdsService.shared.getAdsFromServer {ads in
-            self.ads = ads
+        Task {
+            let ads = try await networkService?.fetchActiveAdsFromServer()
+            self.ads = ads ?? []
         }
     }
 
@@ -52,15 +54,6 @@ class MapWithAdsViewModel: MapWithAdsViewModelInterface {
         }
     }
 
-    func updateUserLocation() {
-        userLocationSubcription = LocationService.shared.$userCurrentLocation
-            .compactMap { $0 }
-            .sink { [weak self] location in
-                self?.userLocation = location
-                self?.userLocationSubcription = nil
-            }
-    }
-
     //TODO: - Error handling
     func getSelectedAdAddressName(location: Location, completion: @escaping (String) -> Void) {
         addressSearchInteractor.searchAddressByCoordinates(latitude: location.latitude, longitude: location.longitude) { response, error in
@@ -69,6 +62,17 @@ class MapWithAdsViewModel: MapWithAdsViewModelInterface {
             if let _ = error {
 
             }
+        }
+    }
+
+    func getSelectedAdAuthor() async -> User? {
+
+        guard let selectedAd = selectedAd else { return nil }
+
+        if let networkService = networkService {
+            return try? await networkService.fetchUserById(id: selectedAd.authorId)
+        } else {
+            return nil
         }
     }
 }
